@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{662A336E-3C6A-4833-BCA0-E76D3FFE8C21}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Evernote</RootNamespace>
+    <AssemblyName>Evernote</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug-wp7\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release-wp7\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EDAM\Error\EDAMErrorCode.cs" />
+    <Compile Include="EDAM\Error\EDAMNotFoundException.cs" />
+    <Compile Include="EDAM\Error\EDAMSystemException.cs" />
+    <Compile Include="EDAM\Error\EDAMUserException.cs" />
+    <Compile Include="EDAM\Limits\Constants.cs" />
+    <Compile Include="EDAM\NoteStore\AdImpressions.cs" />
+    <Compile Include="EDAM\NoteStore\AdParameters.cs" />
+    <Compile Include="EDAM\NoteStore\NoteCollectionCounts.cs" />
+    <Compile Include="EDAM\NoteStore\NoteEmailParameters.cs" />
+    <Compile Include="EDAM\NoteStore\NoteFilter.cs" />
+    <Compile Include="EDAM\NoteStore\NoteList.cs" />
+    <Compile Include="EDAM\NoteStore\NoteMetadata.cs" />
+    <Compile Include="EDAM\NoteStore\NotesMetadataList.cs" />
+    <Compile Include="EDAM\NoteStore\NotesMetadataResultSpec.cs" />
+    <Compile Include="EDAM\NoteStore\NoteStore.cs" />
+    <Compile Include="EDAM\NoteStore\NoteVersionId.cs" />
+    <Compile Include="EDAM\NoteStore\SyncChunk.cs" />
+    <Compile Include="EDAM\NoteStore\SyncChunkFilter.cs" />
+    <Compile Include="EDAM\NoteStore\SyncState.cs" />
+    <Compile Include="EDAM\Type\Accounting.cs" />
+    <Compile Include="EDAM\Type\Ad.cs" />
+    <Compile Include="EDAM\Type\Constants.cs" />
+    <Compile Include="EDAM\Type\Data.cs" />
+    <Compile Include="EDAM\Type\LazyMap.cs" />
+    <Compile Include="EDAM\Type\LinkedNotebook.cs" />
+    <Compile Include="EDAM\Type\Note.cs" />
+    <Compile Include="EDAM\Type\NoteAttributes.cs" />
+    <Compile Include="EDAM\Type\Notebook.cs" />
+    <Compile Include="EDAM\Type\NoteSortOrder.cs" />
+    <Compile Include="EDAM\Type\PremiumOrderStatus.cs" />
+    <Compile Include="EDAM\Type\PrivilegeLevel.cs" />
+    <Compile Include="EDAM\Type\Publishing.cs" />
+    <Compile Include="EDAM\Type\QueryFormat.cs" />
+    <Compile Include="EDAM\Type\Resource.cs" />
+    <Compile Include="EDAM\Type\ResourceAttributes.cs" />
+    <Compile Include="EDAM\Type\SavedSearch.cs" />
+    <Compile Include="EDAM\Type\SharedNotebook.cs" />
+    <Compile Include="EDAM\Type\Tag.cs" />
+    <Compile Include="EDAM\Type\User.cs" />
+    <Compile Include="EDAM\Type\UserAttributes.cs" />
+    <Compile Include="EDAM\UserStore\AuthenticationResult.cs" />
+    <Compile Include="EDAM\UserStore\BootstrapInfo.cs" />
+    <Compile Include="EDAM\UserStore\BootstrapProfile.cs" />
+    <Compile Include="EDAM\UserStore\BootstrapSettings.cs" />
+    <Compile Include="EDAM\UserStore\Constants.cs" />
+    <Compile Include="EDAM\UserStore\PremiumInfo.cs" />
+    <Compile Include="EDAM\UserStore\PublicUserInfo.cs" />
+    <Compile Include="EDAM\UserStore\SponsoredGroupRole.cs" />
+    <Compile Include="EDAM\UserStore\SponsorRole.cs" />
+    <Compile Include="EDAM\UserStore\UserStore.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Thrift\Thrift-wp7.csproj">
+      <Project>{F1D6684B-4996-4B47-8223-A0E9A797B2F4}</Project>
+      <Name>Thrift-wp7</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
