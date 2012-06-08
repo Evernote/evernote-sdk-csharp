@@ -58,6 +58,7 @@
     <Compile Include="EDAM\Limits\Constants.cs" />
     <Compile Include="EDAM\NoteStore\AdImpressions.cs" />
     <Compile Include="EDAM\NoteStore\AdParameters.cs" />
+    <Compile Include="EDAM\NoteStore\ClientUsageMetrics.cs" />
     <Compile Include="EDAM\NoteStore\NoteCollectionCounts.cs" />
     <Compile Include="EDAM\NoteStore\NoteEmailParameters.cs" />
     <Compile Include="EDAM\NoteStore\NoteFilter.cs" />
