@@ -1,5 +1,7 @@
-Evernote SDK for C# version 1.21
+Evernote SDK for C#
 ========================================
+
+Evernote API version 1.22
 
 Overview
 --------
