@@ -858,7 +858,7 @@ namespace Evernote.EDAM.UserStore
 
       public checkVersion_args() {
         this._edamVersionMajor = 1;
-        this._edamVersionMinor = 21;
+        this._edamVersionMinor = 22;
       }
 
       public void Read (TProtocol iprot)

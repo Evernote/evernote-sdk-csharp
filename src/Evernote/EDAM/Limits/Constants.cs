@@ -122,6 +122,12 @@ namespace Evernote.EDAM.Limits
     public static string EDAM_CONTENT_CLASS_HELLO_ENCOUNTER = "evernote.hello.encounter";
     public static string EDAM_CONTENT_CLASS_HELLO_PROFILE = "evernote.hello.profile";
     public static string EDAM_CONTENT_CLASS_FOOD_MEAL = "evernote.food.meal";
+    public static string EDAM_CONTENT_CLASS_SKITCH = "evernote.skitch";
+    public static int EDAM_RELATED_PLAINTEXT_LEN_MIN = 1;
+    public static int EDAM_RELATED_PLAINTEXT_LEN_MAX = 131072;
+    public static int EDAM_RELATED_MAX_NOTES = 25;
+    public static int EDAM_RELATED_MAX_NOTEBOOKS = 1;
+    public static int EDAM_RELATED_MAX_TAGS = 25;
     static Constants()
     {
       EDAM_MIME_TYPES.Add("image/gif");

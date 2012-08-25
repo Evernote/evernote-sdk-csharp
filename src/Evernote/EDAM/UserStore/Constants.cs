@@ -16,6 +16,6 @@ namespace Evernote.EDAM.UserStore
   public class Constants
   {
     public static short EDAM_VERSION_MAJOR = 1;
-    public static short EDAM_VERSION_MINOR = 21;
+    public static short EDAM_VERSION_MINOR = 22;
   }
 }

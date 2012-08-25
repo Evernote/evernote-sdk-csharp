@@ -31,6 +31,7 @@ namespace Evernote.EDAM.UserStore
     private bool _enableSingleNoteSharing;
     private bool _enableSponsoredAccounts;
     private bool _enableTwitterSharing;
+    private bool _enableLinkedInSharing;
 
     public string ServiceHost
     {
@@ -175,6 +176,19 @@ namespace Evernote.EDAM.UserStore
       }
     }
 
+    public bool EnableLinkedInSharing
+    {
+      get
+      {
+        return _enableLinkedInSharing;
+      }
+      set
+      {
+        __isset.enableLinkedInSharing = true;
+        this._enableLinkedInSharing = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -192,6 +206,7 @@ namespace Evernote.EDAM.UserStore
       public bool enableSingleNoteSharing;
       public bool enableSponsoredAccounts;
       public bool enableTwitterSharing;
+      public bool enableLinkedInSharing;
     }
 
     public BootstrapSettings() {
@@ -282,6 +297,13 @@ namespace Evernote.EDAM.UserStore
           case 11:
             if (field.Type == TType.Bool) {
               EnableTwitterSharing = iprot.ReadBool();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 12:
+            if (field.Type == TType.Bool) {
+              EnableLinkedInSharing = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -387,6 +409,14 @@ namespace Evernote.EDAM.UserStore
         oprot.WriteBool(EnableTwitterSharing);
         oprot.WriteFieldEnd();
       }
+      if (__isset.enableLinkedInSharing) {
+        field.Name = "enableLinkedInSharing";
+        field.Type = TType.Bool;
+        field.ID = 12;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteBool(EnableLinkedInSharing);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -415,6 +445,8 @@ namespace Evernote.EDAM.UserStore
       sb.Append(EnableSponsoredAccounts);
       sb.Append(",EnableTwitterSharing: ");
       sb.Append(EnableTwitterSharing);
+      sb.Append(",EnableLinkedInSharing: ");
+      sb.Append(EnableLinkedInSharing);
       sb.Append(")");
       return sb.ToString();
     }

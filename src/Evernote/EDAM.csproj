@@ -58,6 +58,9 @@
     <Compile Include="EDAM\NoteStore\SyncChunk.cs" />
     <Compile Include="EDAM\NoteStore\SyncChunkFilter.cs" />
     <Compile Include="EDAM\NoteStore\SyncState.cs" />
+    <Compile Include="EDAM\NoteStore\RelatedQuery.cs" />
+    <Compile Include="EDAM\NoteStore\RelatedResult.cs" />
+    <Compile Include="EDAM\NoteStore\RelatedResultSpec.cs" />
     <Compile Include="EDAM\Type\Accounting.cs" />
     <Compile Include="EDAM\Type\Ad.cs" />
     <Compile Include="EDAM\Type\Constants.cs" />
