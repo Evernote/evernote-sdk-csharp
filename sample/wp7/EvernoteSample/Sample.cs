@@ -30,7 +30,7 @@ namespace EvernoteTest
         // purpose of exploring the API, you can get a developer token that allows
         // you to access your own Evernote account. To get a developer token, visit 
         // https://sandbox.evernote.com/dev/DeveloperToken.action
-        String authToken = "your developer token";
+        static String authToken = "your developer token";
 
         // Change the following variable to "www.evernote.com" to access the production service
         private const string EvernoteHost = "sandbox.evernote.com";
@@ -48,7 +48,7 @@ namespace EvernoteTest
 
         public static void RunImpl(object state)
         {
-            if (authToken == "your developer token") {
+            if (authToken == "your developer token")
             {
                 ShowMessage("Please fill in your devleoper token in Sample.cs");
                 return;
@@ -77,7 +77,7 @@ namespace EvernoteTest
             // In that case, you don't need to make this call.
             String noteStoreUrl = userStore.getNoteStoreUrl(authToken);
 
-            TTransport noteStoreTransport = new THttpClient(new Uri(authResult.NoteStoreUrl));
+            TTransport noteStoreTransport = new THttpClient(new Uri(noteStoreUrl));
             TProtocol noteStoreProtocol = new TBinaryProtocol(noteStoreTransport);
             NoteStore.Client noteStore = new NoteStore.Client(noteStoreProtocol);
 
