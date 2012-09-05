@@ -55,12 +55,12 @@
     <Compile Include="EDAM\NoteStore\NotesMetadataResultSpec.cs" />
     <Compile Include="EDAM\NoteStore\NoteStore.cs" />
     <Compile Include="EDAM\NoteStore\NoteVersionId.cs" />
-    <Compile Include="EDAM\NoteStore\SyncChunk.cs" />
-    <Compile Include="EDAM\NoteStore\SyncChunkFilter.cs" />
-    <Compile Include="EDAM\NoteStore\SyncState.cs" />
     <Compile Include="EDAM\NoteStore\RelatedQuery.cs" />
     <Compile Include="EDAM\NoteStore\RelatedResult.cs" />
     <Compile Include="EDAM\NoteStore\RelatedResultSpec.cs" />
+    <Compile Include="EDAM\NoteStore\SyncChunk.cs" />
+    <Compile Include="EDAM\NoteStore\SyncChunkFilter.cs" />
+    <Compile Include="EDAM\NoteStore\SyncState.cs" />
     <Compile Include="EDAM\Type\Accounting.cs" />
     <Compile Include="EDAM\Type\Ad.cs" />
     <Compile Include="EDAM\Type\Constants.cs" />
@@ -90,7 +90,6 @@
     <Compile Include="EDAM\UserStore\PremiumInfo.cs" />
     <Compile Include="EDAM\UserStore\PublicUserInfo.cs" />
     <Compile Include="EDAM\UserStore\SponsoredGroupRole.cs" />
-    <Compile Include="EDAM\UserStore\SponsorRole.cs" />
     <Compile Include="EDAM\UserStore\UserStore.cs" />
   </ItemGroup>
   <ItemGroup>
