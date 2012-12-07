@@ -30,6 +30,8 @@ namespace Evernote.EDAM.Type
     private long _serviceUpdated;
     private string _shareKey;
     private string _username;
+    private SharedNotebookPrivilegeLevel _privilege;
+    private bool _allowPreview;
 
     public long Id
     {
@@ -161,6 +163,32 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public SharedNotebookPrivilegeLevel Privilege
+    {
+      get
+      {
+        return _privilege;
+      }
+      set
+      {
+        __isset.privilege = true;
+        this._privilege = value;
+      }
+    }
+
+    public bool AllowPreview
+    {
+      get
+      {
+        return _allowPreview;
+      }
+      set
+      {
+        __isset.allowPreview = true;
+        this._allowPreview = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -177,6 +205,8 @@ namespace Evernote.EDAM.Type
       public bool serviceUpdated;
       public bool shareKey;
       public bool username;
+      public bool privilege;
+      public bool allowPreview;
     }
 
     public SharedNotebook() {
@@ -260,6 +290,20 @@ namespace Evernote.EDAM.Type
           case 9:
             if (field.Type == TType.String) {
               Username = iprot.ReadString();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 11:
+            if (field.Type == TType.I32) {
+              Privilege = (SharedNotebookPrivilegeLevel)iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 12:
+            if (field.Type == TType.Bool) {
+              AllowPreview = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -357,6 +401,22 @@ namespace Evernote.EDAM.Type
         oprot.WriteI64(ServiceUpdated);
         oprot.WriteFieldEnd();
       }
+      if (__isset.privilege) {
+        field.Name = "privilege";
+        field.Type = TType.I32;
+        field.ID = 11;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32((int)Privilege);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.allowPreview) {
+        field.Name = "allowPreview";
+        field.Type = TType.Bool;
+        field.ID = 12;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteBool(AllowPreview);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -383,6 +443,10 @@ namespace Evernote.EDAM.Type
       sb.Append(ShareKey);
       sb.Append(",Username: ");
       sb.Append(Username);
+      sb.Append(",Privilege: ");
+      sb.Append(Privilege);
+      sb.Append(",AllowPreview: ");
+      sb.Append(AllowPreview);
       sb.Append(")");
       return sb.ToString();
     }

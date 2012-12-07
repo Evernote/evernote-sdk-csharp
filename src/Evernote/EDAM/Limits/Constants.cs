@@ -28,6 +28,7 @@ namespace Evernote.EDAM.Limits
     public static string EDAM_EMAIL_LOCAL_REGEX = "^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*$";
     public static string EDAM_EMAIL_DOMAIN_REGEX = "^[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.([A-Za-z]{2,})$";
     public static string EDAM_EMAIL_REGEX = "^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.([A-Za-z]{2,})$";
+    public static string EDAM_VAT_REGEX = "[A-Za-z]{2}.+";
     public static int EDAM_TIMEZONE_LEN_MIN = 1;
     public static int EDAM_TIMEZONE_LEN_MAX = 32;
     public static string EDAM_TIMEZONE_REGEX = "^([A-Za-z_-]+(/[A-Za-z_-]+)*)|(GMT(-|\\+)[0-9]{1,2}(:[0-9]{2})?)$";
@@ -40,19 +41,13 @@ namespace Evernote.EDAM.Limits
     public static string EDAM_MIME_TYPE_WAV = "audio/wav";
     public static string EDAM_MIME_TYPE_MP3 = "audio/mpeg";
     public static string EDAM_MIME_TYPE_AMR = "audio/amr";
+    public static string EDAM_MIME_TYPE_AAC = "audio/aac";
+    public static string EDAM_MIME_TYPE_M4A = "audio/mp4";
     public static string EDAM_MIME_TYPE_MP4_VIDEO = "video/mp4";
     public static string EDAM_MIME_TYPE_INK = "application/vnd.evernote.ink";
     public static string EDAM_MIME_TYPE_PDF = "application/pdf";
     public static string EDAM_MIME_TYPE_DEFAULT = "application/octet-stream";
     public static THashSet<string> EDAM_MIME_TYPES = new THashSet<string>();
-    public static string EDAM_COMMERCE_SERVICE_GOOGLE = "Google";
-    public static string EDAM_COMMERCE_SERVICE_PAYPAL = "Paypal";
-    public static string EDAM_COMMERCE_SERVICE_GIFT = "Gift";
-    public static string EDAM_COMMERCE_SERVICE_TRIALPAY = "TrialPay";
-    public static string EDAM_COMMERCE_SERVICE_TRIAL = "Trial";
-    public static string EDAM_COMMERCE_SERVICE_GROUP = "Group";
-    public static string EDAM_COMMERCE_SERVICE_CYBERSOURCE = "CYBERSRC";
-    public static string EDAM_COMMERCE_DEFAULT_CURRENCY_COUNTRY_CODE = "USD";
     public static int EDAM_SEARCH_QUERY_LEN_MIN = 0;
     public static int EDAM_SEARCH_QUERY_LEN_MAX = 1024;
     public static string EDAM_SEARCH_QUERY_REGEX = "^[^\\p{Cc}\\p{Zl}\\p{Zp}]{0,1024}$";
@@ -97,21 +92,26 @@ namespace Evernote.EDAM.Limits
     public static int EDAM_USER_PASSWORD_LEN_MIN = 6;
     public static int EDAM_USER_PASSWORD_LEN_MAX = 64;
     public static string EDAM_USER_PASSWORD_REGEX = "^[A-Za-z0-9!#$%&'()*+,./:;<=>?@^_`{|}~\\[\\]\\\\-]{6,64}$";
+    public static int EDAM_BUSINESS_URI_LEN_MAX = 32;
     public static int EDAM_NOTE_TAGS_MAX = 100;
     public static int EDAM_NOTE_RESOURCES_MAX = 1000;
     public static int EDAM_USER_TAGS_MAX = 100000;
+    public static int EDAM_BUSINESS_TAGS_MAX = 100000;
     public static int EDAM_USER_SAVED_SEARCHES_MAX = 100;
     public static int EDAM_USER_NOTES_MAX = 100000;
+    public static int EDAM_BUSINESS_NOTES_MAX = 500000;
     public static int EDAM_USER_NOTEBOOKS_MAX = 250;
+    public static int EDAM_BUSINESS_NOTEBOOKS_MAX = 5000;
     public static int EDAM_USER_RECENT_MAILED_ADDRESSES_MAX = 10;
     public static int EDAM_USER_MAIL_LIMIT_DAILY_FREE = 50;
     public static int EDAM_USER_MAIL_LIMIT_DAILY_PREMIUM = 200;
     public static long EDAM_USER_UPLOAD_LIMIT_FREE = 62914560;
     public static long EDAM_USER_UPLOAD_LIMIT_PREMIUM = 1073741824;
+    public static long EDAM_USER_UPLOAD_LIMIT_BUSINESS = 1073741824;
     public static int EDAM_NOTE_SIZE_MAX_FREE = 26214400;
-    public static int EDAM_NOTE_SIZE_MAX_PREMIUM = 52428800;
+    public static int EDAM_NOTE_SIZE_MAX_PREMIUM = 104857600;
     public static int EDAM_RESOURCE_SIZE_MAX_FREE = 26214400;
-    public static int EDAM_RESOURCE_SIZE_MAX_PREMIUM = 52428800;
+    public static int EDAM_RESOURCE_SIZE_MAX_PREMIUM = 104857600;
     public static int EDAM_USER_LINKED_NOTEBOOK_MAX = 100;
     public static int EDAM_NOTEBOOK_SHARED_NOTEBOOK_MAX = 250;
     public static int EDAM_NOTE_CONTENT_CLASS_LEN_MIN = 3;
@@ -123,11 +123,27 @@ namespace Evernote.EDAM.Limits
     public static string EDAM_CONTENT_CLASS_HELLO_PROFILE = "evernote.hello.profile";
     public static string EDAM_CONTENT_CLASS_FOOD_MEAL = "evernote.food.meal";
     public static string EDAM_CONTENT_CLASS_SKITCH = "evernote.skitch";
+    public static string EDAM_CONTENT_CLASS_PENULTIMATE = "evernote.penultimate";
     public static int EDAM_RELATED_PLAINTEXT_LEN_MIN = 1;
     public static int EDAM_RELATED_PLAINTEXT_LEN_MAX = 131072;
     public static int EDAM_RELATED_MAX_NOTES = 25;
     public static int EDAM_RELATED_MAX_NOTEBOOKS = 1;
     public static int EDAM_RELATED_MAX_TAGS = 25;
+    public static int EDAM_BUSINESS_NOTEBOOK_DESCRIPTION_LEN_MIN = 1;
+    public static int EDAM_BUSINESS_NOTEBOOK_DESCRIPTION_LEN_MAX = 200;
+    public static string EDAM_BUSINESS_NOTEBOOK_DESCRIPTION_REGEX = "^[^\\p{Cc}\\p{Z}]([^\\p{Cc}\\p{Zl}\\p{Zp}]{0,198}[^\\p{Cc}\\p{Z}])?$";
+    public static int EDAM_PREFERENCE_NAME_LEN_MIN = 3;
+    public static int EDAM_PREFERENCE_NAME_LEN_MAX = 32;
+    public static int EDAM_PREFERENCE_VALUE_LEN_MIN = 1;
+    public static int EDAM_PREFERENCE_VALUE_LEN_MAX = 1024;
+    public static int EDAM_MAX_PREFERENCES = 100;
+    public static int EDAM_MAX_VALUES_PER_PREFERENCE = 250;
+    public static string EDAM_PREFERENCE_NAME_REGEX = "^[A-Za-z0-9_.-]{3,32}$";
+    public static string EDAM_PREFERENCE_VALUE_REGEX = "^[^\\p{Cc}]{1,1024}$";
+    public static int EDAM_DEVICE_ID_LEN_MAX = 32;
+    public static string EDAM_DEVICE_ID_REGEX = "^[^\\p{Cc}]{1,32}$";
+    public static int EDAM_DEVICE_DESCRIPTION_LEN_MAX = 64;
+    public static string EDAM_DEVICE_DESCRIPTION_REGEX = "^[^\\p{Cc}]{1,64}$";
     static Constants()
     {
       EDAM_MIME_TYPES.Add("image/gif");
@@ -139,6 +155,8 @@ namespace Evernote.EDAM.Limits
       EDAM_MIME_TYPES.Add("application/vnd.evernote.ink");
       EDAM_MIME_TYPES.Add("application/pdf");
       EDAM_MIME_TYPES.Add("video/mp4");
+      EDAM_MIME_TYPES.Add("audio/aac");
+      EDAM_MIME_TYPES.Add("audio/mp4");
       EDAM_PUBLISHING_URI_PROHIBITED.Add("..");
     }
   }

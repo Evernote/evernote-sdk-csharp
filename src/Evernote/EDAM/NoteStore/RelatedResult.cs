@@ -23,6 +23,8 @@ namespace Evernote.EDAM.NoteStore
     private List<Evernote.EDAM.Type.Note> _notes;
     private List<Evernote.EDAM.Type.Notebook> _notebooks;
     private List<Evernote.EDAM.Type.Tag> _tags;
+    private List<Evernote.EDAM.Type.NotebookDescriptor> _containingNotebooks;
+    private string _debugInfo;
 
     public List<Evernote.EDAM.Type.Note> Notes
     {
@@ -63,6 +65,32 @@ namespace Evernote.EDAM.NoteStore
       }
     }
 
+    public List<Evernote.EDAM.Type.NotebookDescriptor> ContainingNotebooks
+    {
+      get
+      {
+        return _containingNotebooks;
+      }
+      set
+      {
+        __isset.containingNotebooks = true;
+        this._containingNotebooks = value;
+      }
+    }
+
+    public string DebugInfo
+    {
+      get
+      {
+        return _debugInfo;
+      }
+      set
+      {
+        __isset.debugInfo = true;
+        this._debugInfo = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -72,6 +100,8 @@ namespace Evernote.EDAM.NoteStore
       public bool notes;
       public bool notebooks;
       public bool tags;
+      public bool containingNotebooks;
+      public bool debugInfo;
     }
 
     public RelatedResult() {
@@ -93,13 +123,13 @@ namespace Evernote.EDAM.NoteStore
             if (field.Type == TType.List) {
               {
                 Notes = new List<Evernote.EDAM.Type.Note>();
-                TList _list103 = iprot.ReadListBegin();
-                for( int _i104 = 0; _i104 < _list103.Count; ++_i104)
+                TList _list94 = iprot.ReadListBegin();
+                for( int _i95 = 0; _i95 < _list94.Count; ++_i95)
                 {
-                  Evernote.EDAM.Type.Note _elem105 = new Evernote.EDAM.Type.Note();
-                  _elem105 = new Evernote.EDAM.Type.Note();
-                  _elem105.Read(iprot);
-                  Notes.Add(_elem105);
+                  Evernote.EDAM.Type.Note _elem96 = new Evernote.EDAM.Type.Note();
+                  _elem96 = new Evernote.EDAM.Type.Note();
+                  _elem96.Read(iprot);
+                  Notes.Add(_elem96);
                 }
                 iprot.ReadListEnd();
               }
@@ -111,13 +141,13 @@ namespace Evernote.EDAM.NoteStore
             if (field.Type == TType.List) {
               {
                 Notebooks = new List<Evernote.EDAM.Type.Notebook>();
-                TList _list106 = iprot.ReadListBegin();
-                for( int _i107 = 0; _i107 < _list106.Count; ++_i107)
+                TList _list97 = iprot.ReadListBegin();
+                for( int _i98 = 0; _i98 < _list97.Count; ++_i98)
                 {
-                  Evernote.EDAM.Type.Notebook _elem108 = new Evernote.EDAM.Type.Notebook();
-                  _elem108 = new Evernote.EDAM.Type.Notebook();
-                  _elem108.Read(iprot);
-                  Notebooks.Add(_elem108);
+                  Evernote.EDAM.Type.Notebook _elem99 = new Evernote.EDAM.Type.Notebook();
+                  _elem99 = new Evernote.EDAM.Type.Notebook();
+                  _elem99.Read(iprot);
+                  Notebooks.Add(_elem99);
                 }
                 iprot.ReadListEnd();
               }
@@ -129,16 +159,41 @@ namespace Evernote.EDAM.NoteStore
             if (field.Type == TType.List) {
               {
                 Tags = new List<Evernote.EDAM.Type.Tag>();
-                TList _list109 = iprot.ReadListBegin();
-                for( int _i110 = 0; _i110 < _list109.Count; ++_i110)
+                TList _list100 = iprot.ReadListBegin();
+                for( int _i101 = 0; _i101 < _list100.Count; ++_i101)
                 {
-                  Evernote.EDAM.Type.Tag _elem111 = new Evernote.EDAM.Type.Tag();
-                  _elem111 = new Evernote.EDAM.Type.Tag();
-                  _elem111.Read(iprot);
-                  Tags.Add(_elem111);
+                  Evernote.EDAM.Type.Tag _elem102 = new Evernote.EDAM.Type.Tag();
+                  _elem102 = new Evernote.EDAM.Type.Tag();
+                  _elem102.Read(iprot);
+                  Tags.Add(_elem102);
                 }
                 iprot.ReadListEnd();
               }
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 4:
+            if (field.Type == TType.List) {
+              {
+                ContainingNotebooks = new List<Evernote.EDAM.Type.NotebookDescriptor>();
+                TList _list103 = iprot.ReadListBegin();
+                for( int _i104 = 0; _i104 < _list103.Count; ++_i104)
+                {
+                  Evernote.EDAM.Type.NotebookDescriptor _elem105 = new Evernote.EDAM.Type.NotebookDescriptor();
+                  _elem105 = new Evernote.EDAM.Type.NotebookDescriptor();
+                  _elem105.Read(iprot);
+                  ContainingNotebooks.Add(_elem105);
+                }
+                iprot.ReadListEnd();
+              }
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 5:
+            if (field.Type == TType.String) {
+              DebugInfo = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -163,9 +218,9 @@ namespace Evernote.EDAM.NoteStore
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.Struct, Notes.Count));
-          foreach (Evernote.EDAM.Type.Note _iter112 in Notes)
+          foreach (Evernote.EDAM.Type.Note _iter106 in Notes)
           {
-            _iter112.Write(oprot);
+            _iter106.Write(oprot);
             oprot.WriteListEnd();
           }
         }
@@ -178,9 +233,9 @@ namespace Evernote.EDAM.NoteStore
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.Struct, Notebooks.Count));
-          foreach (Evernote.EDAM.Type.Notebook _iter113 in Notebooks)
+          foreach (Evernote.EDAM.Type.Notebook _iter107 in Notebooks)
           {
-            _iter113.Write(oprot);
+            _iter107.Write(oprot);
             oprot.WriteListEnd();
           }
         }
@@ -193,12 +248,35 @@ namespace Evernote.EDAM.NoteStore
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.Struct, Tags.Count));
-          foreach (Evernote.EDAM.Type.Tag _iter114 in Tags)
+          foreach (Evernote.EDAM.Type.Tag _iter108 in Tags)
           {
-            _iter114.Write(oprot);
+            _iter108.Write(oprot);
             oprot.WriteListEnd();
           }
         }
+        oprot.WriteFieldEnd();
+      }
+      if (ContainingNotebooks != null && __isset.containingNotebooks) {
+        field.Name = "containingNotebooks";
+        field.Type = TType.List;
+        field.ID = 4;
+        oprot.WriteFieldBegin(field);
+        {
+          oprot.WriteListBegin(new TList(TType.Struct, ContainingNotebooks.Count));
+          foreach (Evernote.EDAM.Type.NotebookDescriptor _iter109 in ContainingNotebooks)
+          {
+            _iter109.Write(oprot);
+            oprot.WriteListEnd();
+          }
+        }
+        oprot.WriteFieldEnd();
+      }
+      if (DebugInfo != null && __isset.debugInfo) {
+        field.Name = "debugInfo";
+        field.Type = TType.String;
+        field.ID = 5;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(DebugInfo);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -213,6 +291,10 @@ namespace Evernote.EDAM.NoteStore
       sb.Append(Notebooks);
       sb.Append(",Tags: ");
       sb.Append(Tags);
+      sb.Append(",ContainingNotebooks: ");
+      sb.Append(ContainingNotebooks);
+      sb.Append(",DebugInfo: ");
+      sb.Append(DebugInfo);
       sb.Append(")");
       return sb.ToString();
     }

@@ -49,6 +49,7 @@ namespace Evernote.EDAM.Type
     private bool _educationalDiscount;
     private string _businessAddress;
     private bool _hideSponsorBilling;
+    private bool _taxExempt;
 
     public string DefaultLocationName
     {
@@ -427,6 +428,19 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public bool TaxExempt
+    {
+      get
+      {
+        return _taxExempt;
+      }
+      set
+      {
+        __isset.taxExempt = true;
+        this._taxExempt = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -462,6 +476,7 @@ namespace Evernote.EDAM.Type
       public bool educationalDiscount;
       public bool businessAddress;
       public bool hideSponsorBilling;
+      public bool taxExempt;
     }
 
     public UserAttributes() {
@@ -698,6 +713,13 @@ namespace Evernote.EDAM.Type
           case 31:
             if (field.Type == TType.Bool) {
               HideSponsorBilling = iprot.ReadBool();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 32:
+            if (field.Type == TType.Bool) {
+              TaxExempt = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -961,6 +983,14 @@ namespace Evernote.EDAM.Type
         oprot.WriteBool(HideSponsorBilling);
         oprot.WriteFieldEnd();
       }
+      if (__isset.taxExempt) {
+        field.Name = "taxExempt";
+        field.Type = TType.Bool;
+        field.ID = 32;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteBool(TaxExempt);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -1025,6 +1055,8 @@ namespace Evernote.EDAM.Type
       sb.Append(BusinessAddress);
       sb.Append(",HideSponsorBilling: ");
       sb.Append(HideSponsorBilling);
+      sb.Append(",TaxExempt: ");
+      sb.Append(TaxExempt);
       sb.Append(")");
       return sb.ToString();
     }

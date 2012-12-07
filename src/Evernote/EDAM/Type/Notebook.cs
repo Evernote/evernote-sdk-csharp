@@ -31,6 +31,9 @@ namespace Evernote.EDAM.Type
     private string _stack;
     private List<long> _sharedNotebookIds;
     private List<SharedNotebook> _sharedNotebooks;
+    private BusinessNotebook _businessNotebook;
+    private User _contact;
+    private NotebookRestrictions _restrictions;
 
     public string Guid
     {
@@ -175,6 +178,45 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public BusinessNotebook BusinessNotebook
+    {
+      get
+      {
+        return _businessNotebook;
+      }
+      set
+      {
+        __isset.businessNotebook = true;
+        this._businessNotebook = value;
+      }
+    }
+
+    public User Contact
+    {
+      get
+      {
+        return _contact;
+      }
+      set
+      {
+        __isset.contact = true;
+        this._contact = value;
+      }
+    }
+
+    public NotebookRestrictions Restrictions
+    {
+      get
+      {
+        return _restrictions;
+      }
+      set
+      {
+        __isset.restrictions = true;
+        this._restrictions = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -192,6 +234,9 @@ namespace Evernote.EDAM.Type
       public bool stack;
       public bool sharedNotebookIds;
       public bool sharedNotebooks;
+      public bool businessNotebook;
+      public bool contact;
+      public bool restrictions;
     }
 
     public Notebook() {
@@ -277,12 +322,12 @@ namespace Evernote.EDAM.Type
             if (field.Type == TType.List) {
               {
                 SharedNotebookIds = new List<long>();
-                TList _list29 = iprot.ReadListBegin();
-                for( int _i30 = 0; _i30 < _list29.Count; ++_i30)
+                TList _list34 = iprot.ReadListBegin();
+                for( int _i35 = 0; _i35 < _list34.Count; ++_i35)
                 {
-                  long _elem31 = 0;
-                  _elem31 = iprot.ReadI64();
-                  SharedNotebookIds.Add(_elem31);
+                  long _elem36 = 0;
+                  _elem36 = iprot.ReadI64();
+                  SharedNotebookIds.Add(_elem36);
                 }
                 iprot.ReadListEnd();
               }
@@ -294,16 +339,40 @@ namespace Evernote.EDAM.Type
             if (field.Type == TType.List) {
               {
                 SharedNotebooks = new List<SharedNotebook>();
-                TList _list32 = iprot.ReadListBegin();
-                for( int _i33 = 0; _i33 < _list32.Count; ++_i33)
+                TList _list37 = iprot.ReadListBegin();
+                for( int _i38 = 0; _i38 < _list37.Count; ++_i38)
                 {
-                  SharedNotebook _elem34 = new SharedNotebook();
-                  _elem34 = new SharedNotebook();
-                  _elem34.Read(iprot);
-                  SharedNotebooks.Add(_elem34);
+                  SharedNotebook _elem39 = new SharedNotebook();
+                  _elem39 = new SharedNotebook();
+                  _elem39.Read(iprot);
+                  SharedNotebooks.Add(_elem39);
                 }
                 iprot.ReadListEnd();
               }
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 15:
+            if (field.Type == TType.Struct) {
+              BusinessNotebook = new BusinessNotebook();
+              BusinessNotebook.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 16:
+            if (field.Type == TType.Struct) {
+              Contact = new User();
+              Contact.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 17:
+            if (field.Type == TType.Struct) {
+              Restrictions = new NotebookRestrictions();
+              Restrictions.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -400,9 +469,9 @@ namespace Evernote.EDAM.Type
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.I64, SharedNotebookIds.Count));
-          foreach (long _iter35 in SharedNotebookIds)
+          foreach (long _iter40 in SharedNotebookIds)
           {
-            oprot.WriteI64(_iter35);
+            oprot.WriteI64(_iter40);
             oprot.WriteListEnd();
           }
         }
@@ -415,12 +484,36 @@ namespace Evernote.EDAM.Type
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.Struct, SharedNotebooks.Count));
-          foreach (SharedNotebook _iter36 in SharedNotebooks)
+          foreach (SharedNotebook _iter41 in SharedNotebooks)
           {
-            _iter36.Write(oprot);
+            _iter41.Write(oprot);
             oprot.WriteListEnd();
           }
         }
+        oprot.WriteFieldEnd();
+      }
+      if (BusinessNotebook != null && __isset.businessNotebook) {
+        field.Name = "businessNotebook";
+        field.Type = TType.Struct;
+        field.ID = 15;
+        oprot.WriteFieldBegin(field);
+        BusinessNotebook.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
+      if (Contact != null && __isset.contact) {
+        field.Name = "contact";
+        field.Type = TType.Struct;
+        field.ID = 16;
+        oprot.WriteFieldBegin(field);
+        Contact.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
+      if (Restrictions != null && __isset.restrictions) {
+        field.Name = "restrictions";
+        field.Type = TType.Struct;
+        field.ID = 17;
+        oprot.WriteFieldBegin(field);
+        Restrictions.Write(oprot);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -451,6 +544,12 @@ namespace Evernote.EDAM.Type
       sb.Append(SharedNotebookIds);
       sb.Append(",SharedNotebooks: ");
       sb.Append(SharedNotebooks);
+      sb.Append(",BusinessNotebook: ");
+      sb.Append(BusinessNotebook== null ? "<null>" : BusinessNotebook.ToString());
+      sb.Append(",Contact: ");
+      sb.Append(Contact== null ? "<null>" : Contact.ToString());
+      sb.Append(",Restrictions: ");
+      sb.Append(Restrictions== null ? "<null>" : Restrictions.ToString());
       sb.Append(")");
       return sb.ToString();
     }

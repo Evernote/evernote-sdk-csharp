@@ -33,6 +33,7 @@ namespace Evernote.EDAM.Type
     private string _contentClass;
     private LazyMap _applicationData;
     private string _lastEditedBy;
+    private Dictionary<string, string> _classifications;
 
     public long SubjectDate
     {
@@ -203,6 +204,19 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public Dictionary<string, string> Classifications
+    {
+      get
+      {
+        return _classifications;
+      }
+      set
+      {
+        __isset.classifications = true;
+        this._classifications = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -222,6 +236,7 @@ namespace Evernote.EDAM.Type
       public bool contentClass;
       public bool applicationData;
       public bool lastEditedBy;
+      public bool classifications;
     }
 
     public NoteAttributes() {
@@ -327,6 +342,25 @@ namespace Evernote.EDAM.Type
           case 24:
             if (field.Type == TType.String) {
               LastEditedBy = iprot.ReadString();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 26:
+            if (field.Type == TType.Map) {
+              {
+                Classifications = new Dictionary<string, string>();
+                TMap _map17 = iprot.ReadMapBegin();
+                for( int _i18 = 0; _i18 < _map17.Count; ++_i18)
+                {
+                  string _key19;
+                  string _val20;
+                  _key19 = iprot.ReadString();
+                  _val20 = iprot.ReadString();
+                  Classifications[_key19] = _val20;
+                }
+                iprot.ReadMapEnd();
+              }
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -448,6 +482,22 @@ namespace Evernote.EDAM.Type
         oprot.WriteString(LastEditedBy);
         oprot.WriteFieldEnd();
       }
+      if (Classifications != null && __isset.classifications) {
+        field.Name = "classifications";
+        field.Type = TType.Map;
+        field.ID = 26;
+        oprot.WriteFieldBegin(field);
+        {
+          oprot.WriteMapBegin(new TMap(TType.String, TType.String, Classifications.Count));
+          foreach (string _iter21 in Classifications.Keys)
+          {
+            oprot.WriteString(_iter21);
+            oprot.WriteString(Classifications[_iter21]);
+            oprot.WriteMapEnd();
+          }
+        }
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -480,6 +530,8 @@ namespace Evernote.EDAM.Type
       sb.Append(ApplicationData== null ? "<null>" : ApplicationData.ToString());
       sb.Append(",LastEditedBy: ");
       sb.Append(LastEditedBy);
+      sb.Append(",Classifications: ");
+      sb.Append(Classifications);
       sb.Append(")");
       return sb.ToString();
     }

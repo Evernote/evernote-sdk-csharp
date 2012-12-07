@@ -22,6 +22,7 @@ namespace Evernote.EDAM.NoteStore
   {
     private string _noteGuid;
     private string _plainText;
+    private NoteFilter _filter;
 
     public string NoteGuid
     {
@@ -49,6 +50,19 @@ namespace Evernote.EDAM.NoteStore
       }
     }
 
+    public NoteFilter Filter
+    {
+      get
+      {
+        return _filter;
+      }
+      set
+      {
+        __isset.filter = true;
+        this._filter = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -57,6 +71,7 @@ namespace Evernote.EDAM.NoteStore
     public struct Isset {
       public bool noteGuid;
       public bool plainText;
+      public bool filter;
     }
 
     public RelatedQuery() {
@@ -84,6 +99,14 @@ namespace Evernote.EDAM.NoteStore
           case 2:
             if (field.Type == TType.String) {
               PlainText = iprot.ReadString();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 3:
+            if (field.Type == TType.Struct) {
+              Filter = new NoteFilter();
+              Filter.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -117,6 +140,14 @@ namespace Evernote.EDAM.NoteStore
         oprot.WriteString(PlainText);
         oprot.WriteFieldEnd();
       }
+      if (Filter != null && __isset.filter) {
+        field.Name = "filter";
+        field.Type = TType.Struct;
+        field.ID = 3;
+        oprot.WriteFieldBegin(field);
+        Filter.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -127,6 +158,8 @@ namespace Evernote.EDAM.NoteStore
       sb.Append(NoteGuid);
       sb.Append(",PlainText: ");
       sb.Append(PlainText);
+      sb.Append(",Filter: ");
+      sb.Append(Filter== null ? "<null>" : Filter.ToString());
       sb.Append(")");
       return sb.ToString();
     }

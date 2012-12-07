@@ -43,8 +43,6 @@
     <Compile Include="EDAM\Error\EDAMSystemException.cs" />
     <Compile Include="EDAM\Error\EDAMUserException.cs" />
     <Compile Include="EDAM\Limits\Constants.cs" />
-    <Compile Include="EDAM\NoteStore\AdImpressions.cs" />
-    <Compile Include="EDAM\NoteStore\AdParameters.cs" />
     <Compile Include="EDAM\NoteStore\ClientUsageMetrics.cs" />
     <Compile Include="EDAM\NoteStore\NoteCollectionCounts.cs" />
     <Compile Include="EDAM\NoteStore\NoteEmailParameters.cs" />
@@ -62,7 +60,8 @@
     <Compile Include="EDAM\NoteStore\SyncChunkFilter.cs" />
     <Compile Include="EDAM\NoteStore\SyncState.cs" />
     <Compile Include="EDAM\Type\Accounting.cs" />
-    <Compile Include="EDAM\Type\Ad.cs" />
+    <Compile Include="EDAM\Type\BusinessNotebook.cs" />
+    <Compile Include="EDAM\Type\BusinessUserRole.cs" />
     <Compile Include="EDAM\Type\Constants.cs" />
     <Compile Include="EDAM\Type\Data.cs" />
     <Compile Include="EDAM\Type\LazyMap.cs" />
@@ -70,7 +69,10 @@
     <Compile Include="EDAM\Type\Note.cs" />
     <Compile Include="EDAM\Type\NoteAttributes.cs" />
     <Compile Include="EDAM\Type\Notebook.cs" />
+    <Compile Include="EDAM\Type\NotebookDescriptor.cs" />
+    <Compile Include="EDAM\Type\NotebookRestrictions.cs" />
     <Compile Include="EDAM\Type\NoteSortOrder.cs" />
+    <Compile Include="EDAM\Type\PremiumInfo.cs" />
     <Compile Include="EDAM\Type\PremiumOrderStatus.cs" />
     <Compile Include="EDAM\Type\PrivilegeLevel.cs" />
     <Compile Include="EDAM\Type\Publishing.cs" />
@@ -79,6 +81,9 @@
     <Compile Include="EDAM\Type\ResourceAttributes.cs" />
     <Compile Include="EDAM\Type\SavedSearch.cs" />
     <Compile Include="EDAM\Type\SharedNotebook.cs" />
+    <Compile Include="EDAM\Type\SharedNotebookInstanceRestrictions.cs" />
+    <Compile Include="EDAM\Type\SharedNotebookPrivilegeLevel.cs" />
+    <Compile Include="EDAM\Type\SponsoredGroupRole.cs" />
     <Compile Include="EDAM\Type\Tag.cs" />
     <Compile Include="EDAM\Type\User.cs" />
     <Compile Include="EDAM\Type\UserAttributes.cs" />
@@ -87,9 +92,7 @@
     <Compile Include="EDAM\UserStore\BootstrapProfile.cs" />
     <Compile Include="EDAM\UserStore\BootstrapSettings.cs" />
     <Compile Include="EDAM\UserStore\Constants.cs" />
-    <Compile Include="EDAM\UserStore\PremiumInfo.cs" />
     <Compile Include="EDAM\UserStore\PublicUserInfo.cs" />
-    <Compile Include="EDAM\UserStore\SponsoredGroupRole.cs" />
     <Compile Include="EDAM\UserStore\UserStore.cs" />
   </ItemGroup>
   <ItemGroup>

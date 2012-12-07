@@ -350,12 +350,12 @@ namespace Evernote.EDAM.Type
             if (field.Type == TType.List) {
               {
                 TagGuids = new List<string>();
-                TList _list17 = iprot.ReadListBegin();
-                for( int _i18 = 0; _i18 < _list17.Count; ++_i18)
+                TList _list22 = iprot.ReadListBegin();
+                for( int _i23 = 0; _i23 < _list22.Count; ++_i23)
                 {
-                  string _elem19 = null;
-                  _elem19 = iprot.ReadString();
-                  TagGuids.Add(_elem19);
+                  string _elem24 = null;
+                  _elem24 = iprot.ReadString();
+                  TagGuids.Add(_elem24);
                 }
                 iprot.ReadListEnd();
               }
@@ -367,13 +367,13 @@ namespace Evernote.EDAM.Type
             if (field.Type == TType.List) {
               {
                 Resources = new List<Resource>();
-                TList _list20 = iprot.ReadListBegin();
-                for( int _i21 = 0; _i21 < _list20.Count; ++_i21)
+                TList _list25 = iprot.ReadListBegin();
+                for( int _i26 = 0; _i26 < _list25.Count; ++_i26)
                 {
-                  Resource _elem22 = new Resource();
-                  _elem22 = new Resource();
-                  _elem22.Read(iprot);
-                  Resources.Add(_elem22);
+                  Resource _elem27 = new Resource();
+                  _elem27 = new Resource();
+                  _elem27.Read(iprot);
+                  Resources.Add(_elem27);
                 }
                 iprot.ReadListEnd();
               }
@@ -393,12 +393,12 @@ namespace Evernote.EDAM.Type
             if (field.Type == TType.List) {
               {
                 TagNames = new List<string>();
-                TList _list23 = iprot.ReadListBegin();
-                for( int _i24 = 0; _i24 < _list23.Count; ++_i24)
+                TList _list28 = iprot.ReadListBegin();
+                for( int _i29 = 0; _i29 < _list28.Count; ++_i29)
                 {
-                  string _elem25 = null;
-                  _elem25 = iprot.ReadString();
-                  TagNames.Add(_elem25);
+                  string _elem30 = null;
+                  _elem30 = iprot.ReadString();
+                  TagNames.Add(_elem30);
                 }
                 iprot.ReadListEnd();
               }
@@ -514,9 +514,9 @@ namespace Evernote.EDAM.Type
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.String, TagGuids.Count));
-          foreach (string _iter26 in TagGuids)
+          foreach (string _iter31 in TagGuids)
           {
-            oprot.WriteString(_iter26);
+            oprot.WriteString(_iter31);
             oprot.WriteListEnd();
           }
         }
@@ -529,9 +529,9 @@ namespace Evernote.EDAM.Type
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.Struct, Resources.Count));
-          foreach (Resource _iter27 in Resources)
+          foreach (Resource _iter32 in Resources)
           {
-            _iter27.Write(oprot);
+            _iter32.Write(oprot);
             oprot.WriteListEnd();
           }
         }
@@ -552,9 +552,9 @@ namespace Evernote.EDAM.Type
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.String, TagNames.Count));
-          foreach (string _iter28 in TagNames)
+          foreach (string _iter33 in TagNames)
           {
-            oprot.WriteString(_iter28);
+            oprot.WriteString(_iter33);
             oprot.WriteListEnd();
           }
         }

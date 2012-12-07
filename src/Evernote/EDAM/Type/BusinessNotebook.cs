@@ -12,54 +12,54 @@ using Thrift;
 using Thrift.Collections;
 using Thrift.Protocol;
 using Thrift.Transport;
-namespace Evernote.EDAM.NoteStore
+namespace Evernote.EDAM.Type
 {
 
   #if !SILVERLIGHT && !NETFX_CORE
   [Serializable]
   #endif
-  public partial class AdImpressions : TBase
+  public partial class BusinessNotebook : TBase
   {
-    private int _adId;
-    private int _impressionCount;
-    private int _impressionTime;
+    private string _notebookDescription;
+    private SharedNotebookPrivilegeLevel _privilege;
+    private bool _recommended;
 
-    public int AdId
+    public string NotebookDescription
     {
       get
       {
-        return _adId;
+        return _notebookDescription;
       }
       set
       {
-        __isset.adId = true;
-        this._adId = value;
+        __isset.notebookDescription = true;
+        this._notebookDescription = value;
       }
     }
 
-    public int ImpressionCount
+    public SharedNotebookPrivilegeLevel Privilege
     {
       get
       {
-        return _impressionCount;
+        return _privilege;
       }
       set
       {
-        __isset.impressionCount = true;
-        this._impressionCount = value;
+        __isset.privilege = true;
+        this._privilege = value;
       }
     }
 
-    public int ImpressionTime
+    public bool Recommended
     {
       get
       {
-        return _impressionTime;
+        return _recommended;
       }
       set
       {
-        __isset.impressionTime = true;
-        this._impressionTime = value;
+        __isset.recommended = true;
+        this._recommended = value;
       }
     }
 
@@ -69,12 +69,12 @@ namespace Evernote.EDAM.NoteStore
     [Serializable]
     #endif
     public struct Isset {
-      public bool adId;
-      public bool impressionCount;
-      public bool impressionTime;
+      public bool notebookDescription;
+      public bool privilege;
+      public bool recommended;
     }
 
-    public AdImpressions() {
+    public BusinessNotebook() {
     }
 
     public void Read (TProtocol iprot)
@@ -90,22 +90,22 @@ namespace Evernote.EDAM.NoteStore
         switch (field.ID)
         {
           case 1:
-            if (field.Type == TType.I32) {
-              AdId = iprot.ReadI32();
+            if (field.Type == TType.String) {
+              NotebookDescription = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 2:
             if (field.Type == TType.I32) {
-              ImpressionCount = iprot.ReadI32();
+              Privilege = (SharedNotebookPrivilegeLevel)iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 3:
-            if (field.Type == TType.I32) {
-              ImpressionTime = iprot.ReadI32();
+            if (field.Type == TType.Bool) {
+              Recommended = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -120,31 +120,31 @@ namespace Evernote.EDAM.NoteStore
     }
 
     public void Write(TProtocol oprot) {
-      TStruct struc = new TStruct("AdImpressions");
+      TStruct struc = new TStruct("BusinessNotebook");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (__isset.adId) {
-        field.Name = "adId";
-        field.Type = TType.I32;
+      if (NotebookDescription != null && __isset.notebookDescription) {
+        field.Name = "notebookDescription";
+        field.Type = TType.String;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(AdId);
+        oprot.WriteString(NotebookDescription);
         oprot.WriteFieldEnd();
       }
-      if (__isset.impressionCount) {
-        field.Name = "impressionCount";
+      if (__isset.privilege) {
+        field.Name = "privilege";
         field.Type = TType.I32;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(ImpressionCount);
+        oprot.WriteI32((int)Privilege);
         oprot.WriteFieldEnd();
       }
-      if (__isset.impressionTime) {
-        field.Name = "impressionTime";
-        field.Type = TType.I32;
+      if (__isset.recommended) {
+        field.Name = "recommended";
+        field.Type = TType.Bool;
         field.ID = 3;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(ImpressionTime);
+        oprot.WriteBool(Recommended);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -152,13 +152,13 @@ namespace Evernote.EDAM.NoteStore
     }
 
     public override string ToString() {
-      StringBuilder sb = new StringBuilder("AdImpressions(");
-      sb.Append("AdId: ");
-      sb.Append(AdId);
-      sb.Append(",ImpressionCount: ");
-      sb.Append(ImpressionCount);
-      sb.Append(",ImpressionTime: ");
-      sb.Append(ImpressionTime);
+      StringBuilder sb = new StringBuilder("BusinessNotebook(");
+      sb.Append("NotebookDescription: ");
+      sb.Append(NotebookDescription);
+      sb.Append(",Privilege: ");
+      sb.Append(Privilege);
+      sb.Append(",Recommended: ");
+      sb.Append(Recommended);
       sb.Append(")");
       return sb.ToString();
     }

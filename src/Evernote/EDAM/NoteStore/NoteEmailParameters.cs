@@ -153,12 +153,12 @@ namespace Evernote.EDAM.NoteStore
             if (field.Type == TType.List) {
               {
                 ToAddresses = new List<string>();
-                TList _list95 = iprot.ReadListBegin();
-                for( int _i96 = 0; _i96 < _list95.Count; ++_i96)
+                TList _list86 = iprot.ReadListBegin();
+                for( int _i87 = 0; _i87 < _list86.Count; ++_i87)
                 {
-                  string _elem97 = null;
-                  _elem97 = iprot.ReadString();
-                  ToAddresses.Add(_elem97);
+                  string _elem88 = null;
+                  _elem88 = iprot.ReadString();
+                  ToAddresses.Add(_elem88);
                 }
                 iprot.ReadListEnd();
               }
@@ -170,12 +170,12 @@ namespace Evernote.EDAM.NoteStore
             if (field.Type == TType.List) {
               {
                 CcAddresses = new List<string>();
-                TList _list98 = iprot.ReadListBegin();
-                for( int _i99 = 0; _i99 < _list98.Count; ++_i99)
+                TList _list89 = iprot.ReadListBegin();
+                for( int _i90 = 0; _i90 < _list89.Count; ++_i90)
                 {
-                  string _elem100 = null;
-                  _elem100 = iprot.ReadString();
-                  CcAddresses.Add(_elem100);
+                  string _elem91 = null;
+                  _elem91 = iprot.ReadString();
+                  CcAddresses.Add(_elem91);
                 }
                 iprot.ReadListEnd();
               }
@@ -233,9 +233,9 @@ namespace Evernote.EDAM.NoteStore
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.String, ToAddresses.Count));
-          foreach (string _iter101 in ToAddresses)
+          foreach (string _iter92 in ToAddresses)
           {
-            oprot.WriteString(_iter101);
+            oprot.WriteString(_iter92);
             oprot.WriteListEnd();
           }
         }
@@ -248,9 +248,9 @@ namespace Evernote.EDAM.NoteStore
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.String, CcAddresses.Count));
-          foreach (string _iter102 in CcAddresses)
+          foreach (string _iter93 in CcAddresses)
           {
-            oprot.WriteString(_iter102);
+            oprot.WriteString(_iter93);
             oprot.WriteListEnd();
           }
         }

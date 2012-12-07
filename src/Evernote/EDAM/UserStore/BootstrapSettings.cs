@@ -32,6 +32,7 @@ namespace Evernote.EDAM.UserStore
     private bool _enableSponsoredAccounts;
     private bool _enableTwitterSharing;
     private bool _enableLinkedInSharing;
+    private bool _enablePublicNotebooks;
 
     public string ServiceHost
     {
@@ -189,6 +190,19 @@ namespace Evernote.EDAM.UserStore
       }
     }
 
+    public bool EnablePublicNotebooks
+    {
+      get
+      {
+        return _enablePublicNotebooks;
+      }
+      set
+      {
+        __isset.enablePublicNotebooks = true;
+        this._enablePublicNotebooks = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -207,6 +221,7 @@ namespace Evernote.EDAM.UserStore
       public bool enableSponsoredAccounts;
       public bool enableTwitterSharing;
       public bool enableLinkedInSharing;
+      public bool enablePublicNotebooks;
     }
 
     public BootstrapSettings() {
@@ -304,6 +319,13 @@ namespace Evernote.EDAM.UserStore
           case 12:
             if (field.Type == TType.Bool) {
               EnableLinkedInSharing = iprot.ReadBool();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 13:
+            if (field.Type == TType.Bool) {
+              EnablePublicNotebooks = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -417,6 +439,14 @@ namespace Evernote.EDAM.UserStore
         oprot.WriteBool(EnableLinkedInSharing);
         oprot.WriteFieldEnd();
       }
+      if (__isset.enablePublicNotebooks) {
+        field.Name = "enablePublicNotebooks";
+        field.Type = TType.Bool;
+        field.ID = 13;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteBool(EnablePublicNotebooks);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -447,6 +477,8 @@ namespace Evernote.EDAM.UserStore
       sb.Append(EnableTwitterSharing);
       sb.Append(",EnableLinkedInSharing: ");
       sb.Append(EnableLinkedInSharing);
+      sb.Append(",EnablePublicNotebooks: ");
+      sb.Append(EnablePublicNotebooks);
       sb.Append(")");
       return sb.ToString();
     }

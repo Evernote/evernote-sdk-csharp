@@ -25,6 +25,7 @@ namespace Evernote.EDAM.UserStore
     private Evernote.EDAM.Type.PrivilegeLevel _privilege;
     private string _username;
     private string _noteStoreUrl;
+    private string _webApiUrlPrefix;
 
     public int UserId
     {
@@ -91,6 +92,19 @@ namespace Evernote.EDAM.UserStore
       }
     }
 
+    public string WebApiUrlPrefix
+    {
+      get
+      {
+        return _webApiUrlPrefix;
+      }
+      set
+      {
+        __isset.webApiUrlPrefix = true;
+        this._webApiUrlPrefix = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -102,6 +116,7 @@ namespace Evernote.EDAM.UserStore
       public bool privilege;
       public bool username;
       public bool noteStoreUrl;
+      public bool webApiUrlPrefix;
     }
 
     public PublicUserInfo() {
@@ -150,6 +165,13 @@ namespace Evernote.EDAM.UserStore
           case 5:
             if (field.Type == TType.String) {
               NoteStoreUrl = iprot.ReadString();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 6:
+            if (field.Type == TType.String) {
+              WebApiUrlPrefix = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -207,6 +229,14 @@ namespace Evernote.EDAM.UserStore
         oprot.WriteString(NoteStoreUrl);
         oprot.WriteFieldEnd();
       }
+      if (WebApiUrlPrefix != null && __isset.webApiUrlPrefix) {
+        field.Name = "webApiUrlPrefix";
+        field.Type = TType.String;
+        field.ID = 6;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(WebApiUrlPrefix);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -223,6 +253,8 @@ namespace Evernote.EDAM.UserStore
       sb.Append(Username);
       sb.Append(",NoteStoreUrl: ");
       sb.Append(NoteStoreUrl);
+      sb.Append(",WebApiUrlPrefix: ");
+      sb.Append(WebApiUrlPrefix);
       sb.Append(")");
       return sb.ToString();
     }

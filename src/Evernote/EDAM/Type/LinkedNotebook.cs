@@ -29,6 +29,8 @@ namespace Evernote.EDAM.Type
     private int _updateSequenceNum;
     private string _noteStoreUrl;
     private string _webApiUrlPrefix;
+    private string _stack;
+    private int _businessId;
 
     public string ShareName
     {
@@ -147,6 +149,32 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public string Stack
+    {
+      get
+      {
+        return _stack;
+      }
+      set
+      {
+        __isset.stack = true;
+        this._stack = value;
+      }
+    }
+
+    public int BusinessId
+    {
+      get
+      {
+        return _businessId;
+      }
+      set
+      {
+        __isset.businessId = true;
+        this._businessId = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -162,6 +190,8 @@ namespace Evernote.EDAM.Type
       public bool updateSequenceNum;
       public bool noteStoreUrl;
       public bool webApiUrlPrefix;
+      public bool stack;
+      public bool businessId;
     }
 
     public LinkedNotebook() {
@@ -238,6 +268,20 @@ namespace Evernote.EDAM.Type
           case 10:
             if (field.Type == TType.String) {
               WebApiUrlPrefix = iprot.ReadString();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 11:
+            if (field.Type == TType.String) {
+              Stack = iprot.ReadString();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 12:
+            if (field.Type == TType.I32) {
+              BusinessId = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -327,6 +371,22 @@ namespace Evernote.EDAM.Type
         oprot.WriteString(WebApiUrlPrefix);
         oprot.WriteFieldEnd();
       }
+      if (Stack != null && __isset.stack) {
+        field.Name = "stack";
+        field.Type = TType.String;
+        field.ID = 11;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(Stack);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.businessId) {
+        field.Name = "businessId";
+        field.Type = TType.I32;
+        field.ID = 12;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32(BusinessId);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -351,6 +411,10 @@ namespace Evernote.EDAM.Type
       sb.Append(NoteStoreUrl);
       sb.Append(",WebApiUrlPrefix: ");
       sb.Append(WebApiUrlPrefix);
+      sb.Append(",Stack: ");
+      sb.Append(Stack);
+      sb.Append(",BusinessId: ");
+      sb.Append(BusinessId);
       sb.Append(")");
       return sb.ToString();
     }

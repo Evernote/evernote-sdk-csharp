@@ -27,6 +27,7 @@ namespace Evernote.EDAM.NoteStore
     private List<string> _tagGuids;
     private string _timeZone;
     private bool _inactive;
+    private string _emphasized;
 
     public int Order
     {
@@ -119,6 +120,19 @@ namespace Evernote.EDAM.NoteStore
       }
     }
 
+    public string Emphasized
+    {
+      get
+      {
+        return _emphasized;
+      }
+      set
+      {
+        __isset.emphasized = true;
+        this._emphasized = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -132,6 +146,7 @@ namespace Evernote.EDAM.NoteStore
       public bool tagGuids;
       public bool timeZone;
       public bool inactive;
+      public bool emphasized;
     }
 
     public NoteFilter() {
@@ -204,6 +219,13 @@ namespace Evernote.EDAM.NoteStore
           case 7:
             if (field.Type == TType.Bool) {
               Inactive = iprot.ReadBool();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 8:
+            if (field.Type == TType.String) {
+              Emphasized = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -284,6 +306,14 @@ namespace Evernote.EDAM.NoteStore
         oprot.WriteBool(Inactive);
         oprot.WriteFieldEnd();
       }
+      if (Emphasized != null && __isset.emphasized) {
+        field.Name = "emphasized";
+        field.Type = TType.String;
+        field.ID = 8;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(Emphasized);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -304,6 +334,8 @@ namespace Evernote.EDAM.NoteStore
       sb.Append(TimeZone);
       sb.Append(",Inactive: ");
       sb.Append(Inactive);
+      sb.Append(",Emphasized: ");
+      sb.Append(Emphasized);
       sb.Append(")");
       return sb.ToString();
     }

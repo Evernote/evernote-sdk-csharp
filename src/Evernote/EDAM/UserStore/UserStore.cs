@@ -31,6 +31,16 @@ namespace Evernote.EDAM.UserStore
       IAsyncResult Begin_authenticate(AsyncCallback callback, object state, string username, string password, string consumerKey, string consumerSecret);
       AuthenticationResult End_authenticate(IAsyncResult asyncResult);
       #endif
+      AuthenticationResult authenticateLongSession(string username, string password, string consumerKey, string consumerSecret, string deviceIdentifier, string deviceDescription);
+      #if SILVERLIGHT || NETFX_CORE
+      IAsyncResult Begin_authenticateLongSession(AsyncCallback callback, object state, string username, string password, string consumerKey, string consumerSecret, string deviceIdentifier, string deviceDescription);
+      AuthenticationResult End_authenticateLongSession(IAsyncResult asyncResult);
+      #endif
+      AuthenticationResult authenticateToBusiness(string authenticationToken);
+      #if SILVERLIGHT || NETFX_CORE
+      IAsyncResult Begin_authenticateToBusiness(AsyncCallback callback, object state, string authenticationToken);
+      AuthenticationResult End_authenticateToBusiness(IAsyncResult asyncResult);
+      #endif
       AuthenticationResult refreshAuthentication(string authenticationToken);
       #if SILVERLIGHT || NETFX_CORE
       IAsyncResult Begin_refreshAuthentication(AsyncCallback callback, object state, string authenticationToken);
@@ -46,10 +56,10 @@ namespace Evernote.EDAM.UserStore
       IAsyncResult Begin_getPublicUserInfo(AsyncCallback callback, object state, string username);
       PublicUserInfo End_getPublicUserInfo(IAsyncResult asyncResult);
       #endif
-      PremiumInfo getPremiumInfo(string authenticationToken);
+      Evernote.EDAM.Type.PremiumInfo getPremiumInfo(string authenticationToken);
       #if SILVERLIGHT || NETFX_CORE
       IAsyncResult Begin_getPremiumInfo(AsyncCallback callback, object state, string authenticationToken);
-      PremiumInfo End_getPremiumInfo(IAsyncResult asyncResult);
+      Evernote.EDAM.Type.PremiumInfo End_getPremiumInfo(IAsyncResult asyncResult);
       #endif
       string getNoteStoreUrl(string authenticationToken);
       #if SILVERLIGHT || NETFX_CORE
@@ -275,6 +285,143 @@ namespace Evernote.EDAM.UserStore
       }
 
       #if SILVERLIGHT || NETFX_CORE
+      public IAsyncResult Begin_authenticateLongSession(AsyncCallback callback, object state, string username, string password, string consumerKey, string consumerSecret, string deviceIdentifier, string deviceDescription)
+      {
+        return send_authenticateLongSession(callback, state, username, password, consumerKey, consumerSecret, deviceIdentifier, deviceDescription);
+      }
+
+      public AuthenticationResult End_authenticateLongSession(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_authenticateLongSession();
+      }
+
+      #endif
+      public AuthenticationResult authenticateLongSession(string username, string password, string consumerKey, string consumerSecret, string deviceIdentifier, string deviceDescription)
+      {
+        #if !SILVERLIGHT && !NETFX_CORE
+        send_authenticateLongSession(username, password, consumerKey, consumerSecret, deviceIdentifier, deviceDescription);
+        return recv_authenticateLongSession();
+
+        #else
+        var asyncResult = Begin_authenticateLongSession(null, null, username, password, consumerKey, consumerSecret, deviceIdentifier, deviceDescription);
+        return End_authenticateLongSession(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT || NETFX_CORE
+      public IAsyncResult send_authenticateLongSession(AsyncCallback callback, object state, string username, string password, string consumerKey, string consumerSecret, string deviceIdentifier, string deviceDescription)
+      #else
+      public void send_authenticateLongSession(string username, string password, string consumerKey, string consumerSecret, string deviceIdentifier, string deviceDescription)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("authenticateLongSession", TMessageType.Call, seqid_));
+        authenticateLongSession_args args = new authenticateLongSession_args();
+        args.Username = username;
+        args.Password = password;
+        args.ConsumerKey = consumerKey;
+        args.ConsumerSecret = consumerSecret;
+        args.DeviceIdentifier = deviceIdentifier;
+        args.DeviceDescription = deviceDescription;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT || NETFX_CORE
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public AuthenticationResult recv_authenticateLongSession()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        authenticateLongSession_result result = new authenticateLongSession_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        if (result.__isset.userException) {
+          throw result.UserException;
+        }
+        if (result.__isset.systemException) {
+          throw result.SystemException;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "authenticateLongSession failed: unknown result");
+      }
+
+      #if SILVERLIGHT || NETFX_CORE
+      public IAsyncResult Begin_authenticateToBusiness(AsyncCallback callback, object state, string authenticationToken)
+      {
+        return send_authenticateToBusiness(callback, state, authenticationToken);
+      }
+
+      public AuthenticationResult End_authenticateToBusiness(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_authenticateToBusiness();
+      }
+
+      #endif
+      public AuthenticationResult authenticateToBusiness(string authenticationToken)
+      {
+        #if !SILVERLIGHT && !NETFX_CORE
+        send_authenticateToBusiness(authenticationToken);
+        return recv_authenticateToBusiness();
+
+        #else
+        var asyncResult = Begin_authenticateToBusiness(null, null, authenticationToken);
+        return End_authenticateToBusiness(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT || NETFX_CORE
+      public IAsyncResult send_authenticateToBusiness(AsyncCallback callback, object state, string authenticationToken)
+      #else
+      public void send_authenticateToBusiness(string authenticationToken)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("authenticateToBusiness", TMessageType.Call, seqid_));
+        authenticateToBusiness_args args = new authenticateToBusiness_args();
+        args.AuthenticationToken = authenticationToken;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT || NETFX_CORE
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public AuthenticationResult recv_authenticateToBusiness()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        authenticateToBusiness_result result = new authenticateToBusiness_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        if (result.__isset.userException) {
+          throw result.UserException;
+        }
+        if (result.__isset.systemException) {
+          throw result.SystemException;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "authenticateToBusiness failed: unknown result");
+      }
+
+      #if SILVERLIGHT || NETFX_CORE
       public IAsyncResult Begin_refreshAuthentication(AsyncCallback callback, object state, string authenticationToken)
       {
         return send_refreshAuthentication(callback, state, authenticationToken);
@@ -481,14 +628,14 @@ namespace Evernote.EDAM.UserStore
         return send_getPremiumInfo(callback, state, authenticationToken);
       }
 
-      public PremiumInfo End_getPremiumInfo(IAsyncResult asyncResult)
+      public Evernote.EDAM.Type.PremiumInfo End_getPremiumInfo(IAsyncResult asyncResult)
       {
         oprot_.Transport.EndFlush(asyncResult);
         return recv_getPremiumInfo();
       }
 
       #endif
-      public PremiumInfo getPremiumInfo(string authenticationToken)
+      public Evernote.EDAM.Type.PremiumInfo getPremiumInfo(string authenticationToken)
       {
         #if !SILVERLIGHT && !NETFX_CORE
         send_getPremiumInfo(authenticationToken);
@@ -518,7 +665,7 @@ namespace Evernote.EDAM.UserStore
         #endif
       }
 
-      public PremiumInfo recv_getPremiumInfo()
+      public Evernote.EDAM.Type.PremiumInfo recv_getPremiumInfo()
       {
         TMessage msg = iprot_.ReadMessageBegin();
         if (msg.Type == TMessageType.Exception) {
@@ -615,6 +762,8 @@ namespace Evernote.EDAM.UserStore
         processMap_["checkVersion"] = checkVersion_Process;
         processMap_["getBootstrapInfo"] = getBootstrapInfo_Process;
         processMap_["authenticate"] = authenticate_Process;
+        processMap_["authenticateLongSession"] = authenticateLongSession_Process;
+        processMap_["authenticateToBusiness"] = authenticateToBusiness_Process;
         processMap_["refreshAuthentication"] = refreshAuthentication_Process;
         processMap_["getUser"] = getUser_Process;
         processMap_["getPublicUserInfo"] = getPublicUserInfo_Process;
@@ -692,6 +841,44 @@ namespace Evernote.EDAM.UserStore
           result.SystemException = systemException;
         }
         oprot.WriteMessageBegin(new TMessage("authenticate", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void authenticateLongSession_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        authenticateLongSession_args args = new authenticateLongSession_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        authenticateLongSession_result result = new authenticateLongSession_result();
+        try {
+          result.Success = iface_.authenticateLongSession(args.Username, args.Password, args.ConsumerKey, args.ConsumerSecret, args.DeviceIdentifier, args.DeviceDescription);
+        } catch (Evernote.EDAM.Error.EDAMUserException userException) {
+          result.UserException = userException;
+        } catch (Evernote.EDAM.Error.EDAMSystemException systemException) {
+          result.SystemException = systemException;
+        }
+        oprot.WriteMessageBegin(new TMessage("authenticateLongSession", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void authenticateToBusiness_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        authenticateToBusiness_args args = new authenticateToBusiness_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        authenticateToBusiness_result result = new authenticateToBusiness_result();
+        try {
+          result.Success = iface_.authenticateToBusiness(args.AuthenticationToken);
+        } catch (Evernote.EDAM.Error.EDAMUserException userException) {
+          result.UserException = userException;
+        } catch (Evernote.EDAM.Error.EDAMSystemException systemException) {
+          result.SystemException = systemException;
+        }
+        oprot.WriteMessageBegin(new TMessage("authenticateToBusiness", TMessageType.Reply, seqid)); 
         result.Write(oprot);
         oprot.WriteMessageEnd();
         oprot.Transport.Flush();
@@ -858,7 +1045,7 @@ namespace Evernote.EDAM.UserStore
 
       public checkVersion_args() {
         this._edamVersionMajor = 1;
-        this._edamVersionMinor = 22;
+        this._edamVersionMinor = 23;
       }
 
       public void Read (TProtocol iprot)
@@ -1545,6 +1732,658 @@ namespace Evernote.EDAM.UserStore
 
       public override string ToString() {
         StringBuilder sb = new StringBuilder("authenticate_result(");
+        sb.Append("Success: ");
+        sb.Append(Success== null ? "<null>" : Success.ToString());
+        sb.Append(",UserException: ");
+        sb.Append(UserException== null ? "<null>" : UserException.ToString());
+        sb.Append(",SystemException: ");
+        sb.Append(SystemException== null ? "<null>" : SystemException.ToString());
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT && !NETFX_CORE
+    [Serializable]
+    #endif
+    public partial class authenticateLongSession_args : TBase
+    {
+      private string _username;
+      private string _password;
+      private string _consumerKey;
+      private string _consumerSecret;
+      private string _deviceIdentifier;
+      private string _deviceDescription;
+
+      public string Username
+      {
+        get
+        {
+          return _username;
+        }
+        set
+        {
+          __isset.username = true;
+          this._username = value;
+        }
+      }
+
+      public string Password
+      {
+        get
+        {
+          return _password;
+        }
+        set
+        {
+          __isset.password = true;
+          this._password = value;
+        }
+      }
+
+      public string ConsumerKey
+      {
+        get
+        {
+          return _consumerKey;
+        }
+        set
+        {
+          __isset.consumerKey = true;
+          this._consumerKey = value;
+        }
+      }
+
+      public string ConsumerSecret
+      {
+        get
+        {
+          return _consumerSecret;
+        }
+        set
+        {
+          __isset.consumerSecret = true;
+          this._consumerSecret = value;
+        }
+      }
+
+      public string DeviceIdentifier
+      {
+        get
+        {
+          return _deviceIdentifier;
+        }
+        set
+        {
+          __isset.deviceIdentifier = true;
+          this._deviceIdentifier = value;
+        }
+      }
+
+      public string DeviceDescription
+      {
+        get
+        {
+          return _deviceDescription;
+        }
+        set
+        {
+          __isset.deviceDescription = true;
+          this._deviceDescription = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT && !NETFX_CORE
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool username;
+        public bool password;
+        public bool consumerKey;
+        public bool consumerSecret;
+        public bool deviceIdentifier;
+        public bool deviceDescription;
+      }
+
+      public authenticateLongSession_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Username = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.String) {
+                Password = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.String) {
+                ConsumerKey = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 4:
+              if (field.Type == TType.String) {
+                ConsumerSecret = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 5:
+              if (field.Type == TType.String) {
+                DeviceIdentifier = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 6:
+              if (field.Type == TType.String) {
+                DeviceDescription = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("authenticateLongSession_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Username != null && __isset.username) {
+          field.Name = "username";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Username);
+          oprot.WriteFieldEnd();
+        }
+        if (Password != null && __isset.password) {
+          field.Name = "password";
+          field.Type = TType.String;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Password);
+          oprot.WriteFieldEnd();
+        }
+        if (ConsumerKey != null && __isset.consumerKey) {
+          field.Name = "consumerKey";
+          field.Type = TType.String;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(ConsumerKey);
+          oprot.WriteFieldEnd();
+        }
+        if (ConsumerSecret != null && __isset.consumerSecret) {
+          field.Name = "consumerSecret";
+          field.Type = TType.String;
+          field.ID = 4;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(ConsumerSecret);
+          oprot.WriteFieldEnd();
+        }
+        if (DeviceIdentifier != null && __isset.deviceIdentifier) {
+          field.Name = "deviceIdentifier";
+          field.Type = TType.String;
+          field.ID = 5;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(DeviceIdentifier);
+          oprot.WriteFieldEnd();
+        }
+        if (DeviceDescription != null && __isset.deviceDescription) {
+          field.Name = "deviceDescription";
+          field.Type = TType.String;
+          field.ID = 6;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(DeviceDescription);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("authenticateLongSession_args(");
+        sb.Append("Username: ");
+        sb.Append(Username);
+        sb.Append(",Password: ");
+        sb.Append(Password);
+        sb.Append(",ConsumerKey: ");
+        sb.Append(ConsumerKey);
+        sb.Append(",ConsumerSecret: ");
+        sb.Append(ConsumerSecret);
+        sb.Append(",DeviceIdentifier: ");
+        sb.Append(DeviceIdentifier);
+        sb.Append(",DeviceDescription: ");
+        sb.Append(DeviceDescription);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT && !NETFX_CORE
+    [Serializable]
+    #endif
+    public partial class authenticateLongSession_result : TBase
+    {
+      private AuthenticationResult _success;
+      private Evernote.EDAM.Error.EDAMUserException _userException;
+      private Evernote.EDAM.Error.EDAMSystemException _systemException;
+
+      public AuthenticationResult Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Evernote.EDAM.Error.EDAMUserException UserException
+      {
+        get
+        {
+          return _userException;
+        }
+        set
+        {
+          __isset.userException = true;
+          this._userException = value;
+        }
+      }
+
+      public Evernote.EDAM.Error.EDAMSystemException SystemException
+      {
+        get
+        {
+          return _systemException;
+        }
+        set
+        {
+          __isset.systemException = true;
+          this._systemException = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT && !NETFX_CORE
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+        public bool userException;
+        public bool systemException;
+      }
+
+      public authenticateLongSession_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Struct) {
+                Success = new AuthenticationResult();
+                Success.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                UserException = new Evernote.EDAM.Error.EDAMUserException();
+                UserException.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.Struct) {
+                SystemException = new Evernote.EDAM.Error.EDAMSystemException();
+                SystemException.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("authenticateLongSession_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          if (Success != null) {
+            field.Name = "Success";
+            field.Type = TType.Struct;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            Success.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        } else if (this.__isset.userException) {
+          if (UserException != null) {
+            field.Name = "UserException";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            UserException.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        } else if (this.__isset.systemException) {
+          if (SystemException != null) {
+            field.Name = "SystemException";
+            field.Type = TType.Struct;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            SystemException.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("authenticateLongSession_result(");
+        sb.Append("Success: ");
+        sb.Append(Success== null ? "<null>" : Success.ToString());
+        sb.Append(",UserException: ");
+        sb.Append(UserException== null ? "<null>" : UserException.ToString());
+        sb.Append(",SystemException: ");
+        sb.Append(SystemException== null ? "<null>" : SystemException.ToString());
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT && !NETFX_CORE
+    [Serializable]
+    #endif
+    public partial class authenticateToBusiness_args : TBase
+    {
+      private string _authenticationToken;
+
+      public string AuthenticationToken
+      {
+        get
+        {
+          return _authenticationToken;
+        }
+        set
+        {
+          __isset.authenticationToken = true;
+          this._authenticationToken = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT && !NETFX_CORE
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool authenticationToken;
+      }
+
+      public authenticateToBusiness_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                AuthenticationToken = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("authenticateToBusiness_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (AuthenticationToken != null && __isset.authenticationToken) {
+          field.Name = "authenticationToken";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(AuthenticationToken);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("authenticateToBusiness_args(");
+        sb.Append("AuthenticationToken: ");
+        sb.Append(AuthenticationToken);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT && !NETFX_CORE
+    [Serializable]
+    #endif
+    public partial class authenticateToBusiness_result : TBase
+    {
+      private AuthenticationResult _success;
+      private Evernote.EDAM.Error.EDAMUserException _userException;
+      private Evernote.EDAM.Error.EDAMSystemException _systemException;
+
+      public AuthenticationResult Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Evernote.EDAM.Error.EDAMUserException UserException
+      {
+        get
+        {
+          return _userException;
+        }
+        set
+        {
+          __isset.userException = true;
+          this._userException = value;
+        }
+      }
+
+      public Evernote.EDAM.Error.EDAMSystemException SystemException
+      {
+        get
+        {
+          return _systemException;
+        }
+        set
+        {
+          __isset.systemException = true;
+          this._systemException = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT && !NETFX_CORE
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+        public bool userException;
+        public bool systemException;
+      }
+
+      public authenticateToBusiness_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Struct) {
+                Success = new AuthenticationResult();
+                Success.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                UserException = new Evernote.EDAM.Error.EDAMUserException();
+                UserException.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.Struct) {
+                SystemException = new Evernote.EDAM.Error.EDAMSystemException();
+                SystemException.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("authenticateToBusiness_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          if (Success != null) {
+            field.Name = "Success";
+            field.Type = TType.Struct;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            Success.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        } else if (this.__isset.userException) {
+          if (UserException != null) {
+            field.Name = "UserException";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            UserException.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        } else if (this.__isset.systemException) {
+          if (SystemException != null) {
+            field.Name = "SystemException";
+            field.Type = TType.Struct;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            SystemException.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("authenticateToBusiness_result(");
         sb.Append("Success: ");
         sb.Append(Success== null ? "<null>" : Success.ToString());
         sb.Append(",UserException: ");
@@ -2422,11 +3261,11 @@ namespace Evernote.EDAM.UserStore
     #endif
     public partial class getPremiumInfo_result : TBase
     {
-      private PremiumInfo _success;
+      private Evernote.EDAM.Type.PremiumInfo _success;
       private Evernote.EDAM.Error.EDAMUserException _userException;
       private Evernote.EDAM.Error.EDAMSystemException _systemException;
 
-      public PremiumInfo Success
+      public Evernote.EDAM.Type.PremiumInfo Success
       {
         get
         {
@@ -2493,7 +3332,7 @@ namespace Evernote.EDAM.UserStore
           {
             case 0:
               if (field.Type == TType.Struct) {
-                Success = new PremiumInfo();
+                Success = new Evernote.EDAM.Type.PremiumInfo();
                 Success.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
