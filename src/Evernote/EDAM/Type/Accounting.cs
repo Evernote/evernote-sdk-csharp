@@ -41,6 +41,8 @@ namespace Evernote.EDAM.Type
     private int _businessId;
     private string _businessName;
     private BusinessUserRole _businessRole;
+    private int _unitDiscount;
+    private long _nextChargeDate;
 
     public long UploadLimit
     {
@@ -315,6 +317,32 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public int UnitDiscount
+    {
+      get
+      {
+        return _unitDiscount;
+      }
+      set
+      {
+        __isset.unitDiscount = true;
+        this._unitDiscount = value;
+      }
+    }
+
+    public long NextChargeDate
+    {
+      get
+      {
+        return _nextChargeDate;
+      }
+      set
+      {
+        __isset.nextChargeDate = true;
+        this._nextChargeDate = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -342,6 +370,8 @@ namespace Evernote.EDAM.Type
       public bool businessId;
       public bool businessName;
       public bool businessRole;
+      public bool unitDiscount;
+      public bool nextChargeDate;
     }
 
     public Accounting() {
@@ -502,6 +532,20 @@ namespace Evernote.EDAM.Type
           case 22:
             if (field.Type == TType.I32) {
               BusinessRole = (BusinessUserRole)iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 23:
+            if (field.Type == TType.I32) {
+              UnitDiscount = iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 24:
+            if (field.Type == TType.I64) {
+              NextChargeDate = iprot.ReadI64();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -687,6 +731,22 @@ namespace Evernote.EDAM.Type
         oprot.WriteI32((int)BusinessRole);
         oprot.WriteFieldEnd();
       }
+      if (__isset.unitDiscount) {
+        field.Name = "unitDiscount";
+        field.Type = TType.I32;
+        field.ID = 23;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32(UnitDiscount);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.nextChargeDate) {
+        field.Name = "nextChargeDate";
+        field.Type = TType.I64;
+        field.ID = 24;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI64(NextChargeDate);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -735,6 +795,10 @@ namespace Evernote.EDAM.Type
       sb.Append(BusinessName);
       sb.Append(",BusinessRole: ");
       sb.Append(BusinessRole);
+      sb.Append(",UnitDiscount: ");
+      sb.Append(UnitDiscount);
+      sb.Append(",NextChargeDate: ");
+      sb.Append(NextChargeDate);
       sb.Append(")");
       return sb.ToString();
     }

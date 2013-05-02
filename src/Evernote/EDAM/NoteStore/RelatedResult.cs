@@ -24,7 +24,6 @@ namespace Evernote.EDAM.NoteStore
     private List<Evernote.EDAM.Type.Notebook> _notebooks;
     private List<Evernote.EDAM.Type.Tag> _tags;
     private List<Evernote.EDAM.Type.NotebookDescriptor> _containingNotebooks;
-    private string _debugInfo;
 
     public List<Evernote.EDAM.Type.Note> Notes
     {
@@ -78,19 +77,6 @@ namespace Evernote.EDAM.NoteStore
       }
     }
 
-    public string DebugInfo
-    {
-      get
-      {
-        return _debugInfo;
-      }
-      set
-      {
-        __isset.debugInfo = true;
-        this._debugInfo = value;
-      }
-    }
-
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -101,7 +87,6 @@ namespace Evernote.EDAM.NoteStore
       public bool notebooks;
       public bool tags;
       public bool containingNotebooks;
-      public bool debugInfo;
     }
 
     public RelatedResult() {
@@ -191,13 +176,6 @@ namespace Evernote.EDAM.NoteStore
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 5:
-            if (field.Type == TType.String) {
-              DebugInfo = iprot.ReadString();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
           default: 
             TProtocolUtil.Skip(iprot, field.Type);
             break;
@@ -271,14 +249,6 @@ namespace Evernote.EDAM.NoteStore
         }
         oprot.WriteFieldEnd();
       }
-      if (DebugInfo != null && __isset.debugInfo) {
-        field.Name = "debugInfo";
-        field.Type = TType.String;
-        field.ID = 5;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteString(DebugInfo);
-        oprot.WriteFieldEnd();
-      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -293,8 +263,6 @@ namespace Evernote.EDAM.NoteStore
       sb.Append(Tags);
       sb.Append(",ContainingNotebooks: ");
       sb.Append(ContainingNotebooks);
-      sb.Append(",DebugInfo: ");
-      sb.Append(DebugInfo);
       sb.Append(")");
       return sb.ToString();
     }

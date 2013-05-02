@@ -25,6 +25,7 @@ namespace Evernote.EDAM.NoteStore
     private int _contentLength;
     private long _created;
     private long _updated;
+    private long _deleted;
     private int _updateSequenceNum;
     private string _notebookGuid;
     private List<string> _tagGuids;
@@ -94,6 +95,19 @@ namespace Evernote.EDAM.NoteStore
       {
         __isset.updated = true;
         this._updated = value;
+      }
+    }
+
+    public long Deleted
+    {
+      get
+      {
+        return _deleted;
+      }
+      set
+      {
+        __isset.deleted = true;
+        this._deleted = value;
       }
     }
 
@@ -186,6 +200,7 @@ namespace Evernote.EDAM.NoteStore
       public bool contentLength;
       public bool created;
       public bool updated;
+      public bool deleted;
       public bool updateSequenceNum;
       public bool notebookGuid;
       public bool tagGuids;
@@ -240,6 +255,13 @@ namespace Evernote.EDAM.NoteStore
           case 7:
             if (field.Type == TType.I64) {
               Updated = iprot.ReadI64();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 8:
+            if (field.Type == TType.I64) {
+              Deleted = iprot.ReadI64();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -350,6 +372,14 @@ namespace Evernote.EDAM.NoteStore
         oprot.WriteI64(Updated);
         oprot.WriteFieldEnd();
       }
+      if (__isset.deleted) {
+        field.Name = "deleted";
+        field.Type = TType.I64;
+        field.ID = 8;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI64(Deleted);
+        oprot.WriteFieldEnd();
+      }
       if (__isset.updateSequenceNum) {
         field.Name = "updateSequenceNum";
         field.Type = TType.I32;
@@ -421,6 +451,8 @@ namespace Evernote.EDAM.NoteStore
       sb.Append(Created);
       sb.Append(",Updated: ");
       sb.Append(Updated);
+      sb.Append(",Deleted: ");
+      sb.Append(Deleted);
       sb.Append(",UpdateSequenceNum: ");
       sb.Append(UpdateSequenceNum);
       sb.Append(",NotebookGuid: ");

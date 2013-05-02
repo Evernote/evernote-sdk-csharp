@@ -25,6 +25,7 @@ namespace Evernote.EDAM.Type
     private string _query;
     private QueryFormat _format;
     private int _updateSequenceNum;
+    private SavedSearchScope _scope;
 
     public string Guid
     {
@@ -91,6 +92,19 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public SavedSearchScope Scope
+    {
+      get
+      {
+        return _scope;
+      }
+      set
+      {
+        __isset.scope = true;
+        this._scope = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -102,6 +116,7 @@ namespace Evernote.EDAM.Type
       public bool query;
       public bool format;
       public bool updateSequenceNum;
+      public bool scope;
     }
 
     public SavedSearch() {
@@ -150,6 +165,14 @@ namespace Evernote.EDAM.Type
           case 5:
             if (field.Type == TType.I32) {
               UpdateSequenceNum = iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 6:
+            if (field.Type == TType.Struct) {
+              Scope = new SavedSearchScope();
+              Scope.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -207,6 +230,14 @@ namespace Evernote.EDAM.Type
         oprot.WriteI32(UpdateSequenceNum);
         oprot.WriteFieldEnd();
       }
+      if (Scope != null && __isset.scope) {
+        field.Name = "scope";
+        field.Type = TType.Struct;
+        field.ID = 6;
+        oprot.WriteFieldBegin(field);
+        Scope.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -223,6 +254,8 @@ namespace Evernote.EDAM.Type
       sb.Append(Format);
       sb.Append(",UpdateSequenceNum: ");
       sb.Append(UpdateSequenceNum);
+      sb.Append(",Scope: ");
+      sb.Append(Scope== null ? "<null>" : Scope.ToString());
       sb.Append(")");
       return sb.ToString();
     }

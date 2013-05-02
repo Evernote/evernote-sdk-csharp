@@ -12,54 +12,68 @@ using Thrift;
 using Thrift.Collections;
 using Thrift.Protocol;
 using Thrift.Transport;
-namespace Evernote.EDAM.Error
+namespace Evernote.EDAM.Type
 {
 
   #if !SILVERLIGHT && !NETFX_CORE
   [Serializable]
   #endif
-  public partial class EDAMSystemException : Exception, TBase
+  public partial class BusinessUserInfo : TBase
   {
-    private EDAMErrorCode _errorCode;
-    private string _message;
-    private int _rateLimitDuration;
+    private int _businessId;
+    private string _businessName;
+    private BusinessUserRole _role;
+    private string _email;
 
-    public EDAMErrorCode ErrorCode
+    public int BusinessId
     {
       get
       {
-        return _errorCode;
+        return _businessId;
       }
       set
       {
-        __isset.errorCode = true;
-        this._errorCode = value;
+        __isset.businessId = true;
+        this._businessId = value;
       }
     }
 
-    public string Message
+    public string BusinessName
     {
       get
       {
-        return _message;
+        return _businessName;
       }
       set
       {
-        __isset.message = true;
-        this._message = value;
+        __isset.businessName = true;
+        this._businessName = value;
       }
     }
 
-    public int RateLimitDuration
+    public BusinessUserRole Role
     {
       get
       {
-        return _rateLimitDuration;
+        return _role;
       }
       set
       {
-        __isset.rateLimitDuration = true;
-        this._rateLimitDuration = value;
+        __isset.role = true;
+        this._role = value;
+      }
+    }
+
+    public string Email
+    {
+      get
+      {
+        return _email;
+      }
+      set
+      {
+        __isset.email = true;
+        this._email = value;
       }
     }
 
@@ -69,12 +83,13 @@ namespace Evernote.EDAM.Error
     [Serializable]
     #endif
     public struct Isset {
-      public bool errorCode;
-      public bool message;
-      public bool rateLimitDuration;
+      public bool businessId;
+      public bool businessName;
+      public bool role;
+      public bool email;
     }
 
-    public EDAMSystemException() {
+    public BusinessUserInfo() {
     }
 
     public void Read (TProtocol iprot)
@@ -91,21 +106,28 @@ namespace Evernote.EDAM.Error
         {
           case 1:
             if (field.Type == TType.I32) {
-              ErrorCode = (EDAMErrorCode)iprot.ReadI32();
+              BusinessId = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 2:
             if (field.Type == TType.String) {
-              Message = iprot.ReadString();
+              BusinessName = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 3:
             if (field.Type == TType.I32) {
-              RateLimitDuration = iprot.ReadI32();
+              Role = (BusinessUserRole)iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 4:
+            if (field.Type == TType.String) {
+              Email = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -120,31 +142,39 @@ namespace Evernote.EDAM.Error
     }
 
     public void Write(TProtocol oprot) {
-      TStruct struc = new TStruct("EDAMSystemException");
+      TStruct struc = new TStruct("BusinessUserInfo");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (__isset.errorCode) {
-        field.Name = "errorCode";
+      if (__isset.businessId) {
+        field.Name = "businessId";
         field.Type = TType.I32;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32((int)ErrorCode);
+        oprot.WriteI32(BusinessId);
         oprot.WriteFieldEnd();
       }
-      if (Message != null && __isset.message) {
-        field.Name = "message";
+      if (BusinessName != null && __isset.businessName) {
+        field.Name = "businessName";
         field.Type = TType.String;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(Message);
+        oprot.WriteString(BusinessName);
         oprot.WriteFieldEnd();
       }
-      if (__isset.rateLimitDuration) {
-        field.Name = "rateLimitDuration";
+      if (__isset.role) {
+        field.Name = "role";
         field.Type = TType.I32;
         field.ID = 3;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(RateLimitDuration);
+        oprot.WriteI32((int)Role);
+        oprot.WriteFieldEnd();
+      }
+      if (Email != null && __isset.email) {
+        field.Name = "email";
+        field.Type = TType.String;
+        field.ID = 4;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(Email);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -152,13 +182,15 @@ namespace Evernote.EDAM.Error
     }
 
     public override string ToString() {
-      StringBuilder sb = new StringBuilder("EDAMSystemException(");
-      sb.Append("ErrorCode: ");
-      sb.Append(ErrorCode);
-      sb.Append(",Message: ");
-      sb.Append(Message);
-      sb.Append(",RateLimitDuration: ");
-      sb.Append(RateLimitDuration);
+      StringBuilder sb = new StringBuilder("BusinessUserInfo(");
+      sb.Append("BusinessId: ");
+      sb.Append(BusinessId);
+      sb.Append(",BusinessName: ");
+      sb.Append(BusinessName);
+      sb.Append(",Role: ");
+      sb.Append(Role);
+      sb.Append(",Email: ");
+      sb.Append(Email);
       sb.Append(")");
       return sb.ToString();
     }

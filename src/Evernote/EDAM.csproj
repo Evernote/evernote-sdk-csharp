@@ -56,11 +56,13 @@
     <Compile Include="EDAM\NoteStore\RelatedQuery.cs" />
     <Compile Include="EDAM\NoteStore\RelatedResult.cs" />
     <Compile Include="EDAM\NoteStore\RelatedResultSpec.cs" />
+    <Compile Include="EDAM\NoteStore\Preferences.cs" />
     <Compile Include="EDAM\NoteStore\SyncChunk.cs" />
     <Compile Include="EDAM\NoteStore\SyncChunkFilter.cs" />
     <Compile Include="EDAM\NoteStore\SyncState.cs" />
     <Compile Include="EDAM\Type\Accounting.cs" />
     <Compile Include="EDAM\Type\BusinessNotebook.cs" />
+    <Compile Include="EDAM\Type\BusinessUserInfo.cs" />
     <Compile Include="EDAM\Type\BusinessUserRole.cs" />
     <Compile Include="EDAM\Type\Constants.cs" />
     <Compile Include="EDAM\Type\Data.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="EDAM\Type\Resource.cs" />
     <Compile Include="EDAM\Type\ResourceAttributes.cs" />
     <Compile Include="EDAM\Type\SavedSearch.cs" />
+    <Compile Include="EDAM\Type\SavedSearchScope.cs" />
     <Compile Include="EDAM\Type\SharedNotebook.cs" />
     <Compile Include="EDAM\Type\SharedNotebookInstanceRestrictions.cs" />
     <Compile Include="EDAM\Type\SharedNotebookPrivilegeLevel.cs" />

@@ -30,6 +30,7 @@ namespace Evernote.EDAM.Type
     private bool _canPurchaseUploadAllowance;
     private string _sponsoredGroupName;
     private SponsoredGroupRole _sponsoredGroupRole;
+    private bool _premiumUpgradable;
 
     public long CurrentTime
     {
@@ -161,6 +162,19 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public bool PremiumUpgradable
+    {
+      get
+      {
+        return _premiumUpgradable;
+      }
+      set
+      {
+        __isset.premiumUpgradable = true;
+        this._premiumUpgradable = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -177,6 +191,7 @@ namespace Evernote.EDAM.Type
       public bool canPurchaseUploadAllowance;
       public bool sponsoredGroupName;
       public bool sponsoredGroupRole;
+      public bool premiumUpgradable;
     }
 
     public PremiumInfo() {
@@ -260,6 +275,13 @@ namespace Evernote.EDAM.Type
           case 10:
             if (field.Type == TType.I32) {
               SponsoredGroupRole = (SponsoredGroupRole)iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 11:
+            if (field.Type == TType.Bool) {
+              PremiumUpgradable = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -357,6 +379,14 @@ namespace Evernote.EDAM.Type
         oprot.WriteI32((int)SponsoredGroupRole);
         oprot.WriteFieldEnd();
       }
+      if (__isset.premiumUpgradable) {
+        field.Name = "premiumUpgradable";
+        field.Type = TType.Bool;
+        field.ID = 11;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteBool(PremiumUpgradable);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -383,6 +413,8 @@ namespace Evernote.EDAM.Type
       sb.Append(SponsoredGroupName);
       sb.Append(",SponsoredGroupRole: ");
       sb.Append(SponsoredGroupRole);
+      sb.Append(",PremiumUpgradable: ");
+      sb.Append(PremiumUpgradable);
       sb.Append(")");
       return sb.ToString();
     }

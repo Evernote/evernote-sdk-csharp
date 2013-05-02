@@ -36,6 +36,11 @@ namespace Evernote.EDAM.UserStore
       IAsyncResult Begin_authenticateLongSession(AsyncCallback callback, object state, string username, string password, string consumerKey, string consumerSecret, string deviceIdentifier, string deviceDescription);
       AuthenticationResult End_authenticateLongSession(IAsyncResult asyncResult);
       #endif
+      void revokeLongSession(string authenticationToken);
+      #if SILVERLIGHT || NETFX_CORE
+      IAsyncResult Begin_revokeLongSession(AsyncCallback callback, object state, string authenticationToken);
+      void End_revokeLongSession(IAsyncResult asyncResult);
+      #endif
       AuthenticationResult authenticateToBusiness(string authenticationToken);
       #if SILVERLIGHT || NETFX_CORE
       IAsyncResult Begin_authenticateToBusiness(AsyncCallback callback, object state, string authenticationToken);
@@ -353,6 +358,69 @@ namespace Evernote.EDAM.UserStore
           throw result.SystemException;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "authenticateLongSession failed: unknown result");
+      }
+
+      #if SILVERLIGHT || NETFX_CORE
+      public IAsyncResult Begin_revokeLongSession(AsyncCallback callback, object state, string authenticationToken)
+      {
+        return send_revokeLongSession(callback, state, authenticationToken);
+      }
+
+      public void End_revokeLongSession(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        recv_revokeLongSession();
+      }
+
+      #endif
+      public void revokeLongSession(string authenticationToken)
+      {
+        #if !SILVERLIGHT && !NETFX_CORE
+        send_revokeLongSession(authenticationToken);
+        recv_revokeLongSession();
+
+        #else
+        var asyncResult = Begin_revokeLongSession(null, null, authenticationToken);
+        End_revokeLongSession(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT || NETFX_CORE
+      public IAsyncResult send_revokeLongSession(AsyncCallback callback, object state, string authenticationToken)
+      #else
+      public void send_revokeLongSession(string authenticationToken)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("revokeLongSession", TMessageType.Call, seqid_));
+        revokeLongSession_args args = new revokeLongSession_args();
+        args.AuthenticationToken = authenticationToken;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT || NETFX_CORE
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public void recv_revokeLongSession()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        revokeLongSession_result result = new revokeLongSession_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.userException) {
+          throw result.UserException;
+        }
+        if (result.__isset.systemException) {
+          throw result.SystemException;
+        }
+        return;
       }
 
       #if SILVERLIGHT || NETFX_CORE
@@ -763,6 +831,7 @@ namespace Evernote.EDAM.UserStore
         processMap_["getBootstrapInfo"] = getBootstrapInfo_Process;
         processMap_["authenticate"] = authenticate_Process;
         processMap_["authenticateLongSession"] = authenticateLongSession_Process;
+        processMap_["revokeLongSession"] = revokeLongSession_Process;
         processMap_["authenticateToBusiness"] = authenticateToBusiness_Process;
         processMap_["refreshAuthentication"] = refreshAuthentication_Process;
         processMap_["getUser"] = getUser_Process;
@@ -860,6 +929,25 @@ namespace Evernote.EDAM.UserStore
           result.SystemException = systemException;
         }
         oprot.WriteMessageBegin(new TMessage("authenticateLongSession", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void revokeLongSession_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        revokeLongSession_args args = new revokeLongSession_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        revokeLongSession_result result = new revokeLongSession_result();
+        try {
+          iface_.revokeLongSession(args.AuthenticationToken);
+        } catch (Evernote.EDAM.Error.EDAMUserException userException) {
+          result.UserException = userException;
+        } catch (Evernote.EDAM.Error.EDAMSystemException systemException) {
+          result.SystemException = systemException;
+        }
+        oprot.WriteMessageBegin(new TMessage("revokeLongSession", TMessageType.Reply, seqid)); 
         result.Write(oprot);
         oprot.WriteMessageEnd();
         oprot.Transport.Flush();
@@ -1045,7 +1133,7 @@ namespace Evernote.EDAM.UserStore
 
       public checkVersion_args() {
         this._edamVersionMajor = 1;
-        this._edamVersionMinor = 23;
+        this._edamVersionMinor = 24;
       }
 
       public void Read (TProtocol iprot)
@@ -2141,6 +2229,218 @@ namespace Evernote.EDAM.UserStore
         sb.Append("Success: ");
         sb.Append(Success== null ? "<null>" : Success.ToString());
         sb.Append(",UserException: ");
+        sb.Append(UserException== null ? "<null>" : UserException.ToString());
+        sb.Append(",SystemException: ");
+        sb.Append(SystemException== null ? "<null>" : SystemException.ToString());
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT && !NETFX_CORE
+    [Serializable]
+    #endif
+    public partial class revokeLongSession_args : TBase
+    {
+      private string _authenticationToken;
+
+      public string AuthenticationToken
+      {
+        get
+        {
+          return _authenticationToken;
+        }
+        set
+        {
+          __isset.authenticationToken = true;
+          this._authenticationToken = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT && !NETFX_CORE
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool authenticationToken;
+      }
+
+      public revokeLongSession_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                AuthenticationToken = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("revokeLongSession_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (AuthenticationToken != null && __isset.authenticationToken) {
+          field.Name = "authenticationToken";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(AuthenticationToken);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("revokeLongSession_args(");
+        sb.Append("AuthenticationToken: ");
+        sb.Append(AuthenticationToken);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT && !NETFX_CORE
+    [Serializable]
+    #endif
+    public partial class revokeLongSession_result : TBase
+    {
+      private Evernote.EDAM.Error.EDAMUserException _userException;
+      private Evernote.EDAM.Error.EDAMSystemException _systemException;
+
+      public Evernote.EDAM.Error.EDAMUserException UserException
+      {
+        get
+        {
+          return _userException;
+        }
+        set
+        {
+          __isset.userException = true;
+          this._userException = value;
+        }
+      }
+
+      public Evernote.EDAM.Error.EDAMSystemException SystemException
+      {
+        get
+        {
+          return _systemException;
+        }
+        set
+        {
+          __isset.systemException = true;
+          this._systemException = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT && !NETFX_CORE
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool userException;
+        public bool systemException;
+      }
+
+      public revokeLongSession_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.Struct) {
+                UserException = new Evernote.EDAM.Error.EDAMUserException();
+                UserException.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.Struct) {
+                SystemException = new Evernote.EDAM.Error.EDAMSystemException();
+                SystemException.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("revokeLongSession_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.userException) {
+          if (UserException != null) {
+            field.Name = "UserException";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            UserException.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        } else if (this.__isset.systemException) {
+          if (SystemException != null) {
+            field.Name = "SystemException";
+            field.Type = TType.Struct;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            SystemException.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("revokeLongSession_result(");
+        sb.Append("UserException: ");
         sb.Append(UserException== null ? "<null>" : UserException.ToString());
         sb.Append(",SystemException: ");
         sb.Append(SystemException== null ? "<null>" : SystemException.ToString());

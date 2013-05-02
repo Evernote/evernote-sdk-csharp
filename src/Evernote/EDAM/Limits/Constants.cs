@@ -28,7 +28,7 @@ namespace Evernote.EDAM.Limits
     public static string EDAM_EMAIL_LOCAL_REGEX = "^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*$";
     public static string EDAM_EMAIL_DOMAIN_REGEX = "^[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.([A-Za-z]{2,})$";
     public static string EDAM_EMAIL_REGEX = "^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.([A-Za-z]{2,})$";
-    public static string EDAM_VAT_REGEX = "[A-Za-z]{2}.+";
+    public static string EDAM_VAT_REGEX = "^((AT)?U[0-9]{8}|(BE)?0?[0-9]{9}|(BG)?[0-9]{9,10}|(CY)?[0-9]{8}L|(CZ)?[0-9]{8,10}|(DE)?[0-9]{9}|(DK)?[0-9]{8}|(EE)?[0-9]{9}|(EL|GR)?[0-9]{9}|(ES)?[0-9A-Z][0-9]{7}[0-9A-Z]|(FI)?[0-9]{8}|(FR)?[0-9A-Z]{2}[0-9]{9}|(GB)?([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})|(HU)?[0-9]{8}|(IE)?[0-9]S[0-9]{5}L|(IT)?[0-9]{11}|(LT)?([0-9]{9}|[0-9]{12})|(LU)?[0-9]{8}|(LV)?[0-9]{11}|(MT)?[0-9]{8}|(NL)?[0-9]{9}B[0-9]{2}|(PL)?[0-9]{10}|(PT)?[0-9]{9}|(RO)?[0-9]{2,10}|(SE)?[0-9]{12}|(SI)?[0-9]{8}|(SK)?[0-9]{10})|[0-9]{9}MVA|[0-9]{6}|CHE[0-9]{9}(TVA|MWST|IVA)$";
     public static int EDAM_TIMEZONE_LEN_MIN = 1;
     public static int EDAM_TIMEZONE_LEN_MAX = 32;
     public static string EDAM_TIMEZONE_REGEX = "^([A-Za-z_-]+(/[A-Za-z_-]+)*)|(GMT(-|\\+)[0-9]{1,2}(:[0-9]{2})?)$";
@@ -48,6 +48,7 @@ namespace Evernote.EDAM.Limits
     public static string EDAM_MIME_TYPE_PDF = "application/pdf";
     public static string EDAM_MIME_TYPE_DEFAULT = "application/octet-stream";
     public static THashSet<string> EDAM_MIME_TYPES = new THashSet<string>();
+    public static THashSet<string> EDAM_INDEXABLE_RESOURCE_MIME_TYPES = new THashSet<string>();
     public static int EDAM_SEARCH_QUERY_LEN_MIN = 0;
     public static int EDAM_SEARCH_QUERY_LEN_MAX = 1024;
     public static string EDAM_SEARCH_QUERY_REGEX = "^[^\\p{Cc}\\p{Zl}\\p{Zp}]{0,1024}$";
@@ -107,23 +108,27 @@ namespace Evernote.EDAM.Limits
     public static int EDAM_USER_MAIL_LIMIT_DAILY_PREMIUM = 200;
     public static long EDAM_USER_UPLOAD_LIMIT_FREE = 62914560;
     public static long EDAM_USER_UPLOAD_LIMIT_PREMIUM = 1073741824;
-    public static long EDAM_USER_UPLOAD_LIMIT_BUSINESS = 1073741824;
+    public static long EDAM_USER_UPLOAD_LIMIT_BUSINESS = 2147483647;
     public static int EDAM_NOTE_SIZE_MAX_FREE = 26214400;
     public static int EDAM_NOTE_SIZE_MAX_PREMIUM = 104857600;
     public static int EDAM_RESOURCE_SIZE_MAX_FREE = 26214400;
     public static int EDAM_RESOURCE_SIZE_MAX_PREMIUM = 104857600;
     public static int EDAM_USER_LINKED_NOTEBOOK_MAX = 100;
+    public static int EDAM_USER_LINKED_NOTEBOOK_MAX_PREMIUM = 250;
     public static int EDAM_NOTEBOOK_SHARED_NOTEBOOK_MAX = 250;
     public static int EDAM_NOTE_CONTENT_CLASS_LEN_MIN = 3;
     public static int EDAM_NOTE_CONTENT_CLASS_LEN_MAX = 32;
+    public static string EDAM_NOTE_CONTENT_CLASS_REGEX = "^[A-Za-z0-9_.-]{3,32}$";
     public static string EDAM_HELLO_APP_CONTENT_CLASS_PREFIX = "evernote.hello.";
     public static string EDAM_FOOD_APP_CONTENT_CLASS_PREFIX = "evernote.food.";
-    public static string EDAM_NOTE_CONTENT_CLASS_REGEX = "^[A-Za-z0-9_.-]{3,32}$";
     public static string EDAM_CONTENT_CLASS_HELLO_ENCOUNTER = "evernote.hello.encounter";
     public static string EDAM_CONTENT_CLASS_HELLO_PROFILE = "evernote.hello.profile";
     public static string EDAM_CONTENT_CLASS_FOOD_MEAL = "evernote.food.meal";
+    public static string EDAM_CONTENT_CLASS_SKITCH_PREFIX = "evernote.skitch";
     public static string EDAM_CONTENT_CLASS_SKITCH = "evernote.skitch";
-    public static string EDAM_CONTENT_CLASS_PENULTIMATE = "evernote.penultimate";
+    public static string EDAM_CONTENT_CLASS_SKITCH_PDF = "evernote.skitch.pdf";
+    public static string EDAM_CONTENT_CLASS_PENULTIMATE_PREFIX = "evernote.penultimate.";
+    public static string EDAM_CONTENT_CLASS_PENULTIMATE_NOTEBOOK = "evernote.penultimate.notebook";
     public static int EDAM_RELATED_PLAINTEXT_LEN_MIN = 1;
     public static int EDAM_RELATED_PLAINTEXT_LEN_MAX = 131072;
     public static int EDAM_RELATED_MAX_NOTES = 25;
@@ -132,18 +137,24 @@ namespace Evernote.EDAM.Limits
     public static int EDAM_BUSINESS_NOTEBOOK_DESCRIPTION_LEN_MIN = 1;
     public static int EDAM_BUSINESS_NOTEBOOK_DESCRIPTION_LEN_MAX = 200;
     public static string EDAM_BUSINESS_NOTEBOOK_DESCRIPTION_REGEX = "^[^\\p{Cc}\\p{Z}]([^\\p{Cc}\\p{Zl}\\p{Zp}]{0,198}[^\\p{Cc}\\p{Z}])?$";
+    public static int EDAM_BUSINESS_PHONE_NUMBER_LEN_MAX = 20;
     public static int EDAM_PREFERENCE_NAME_LEN_MIN = 3;
     public static int EDAM_PREFERENCE_NAME_LEN_MAX = 32;
     public static int EDAM_PREFERENCE_VALUE_LEN_MIN = 1;
     public static int EDAM_PREFERENCE_VALUE_LEN_MAX = 1024;
     public static int EDAM_MAX_PREFERENCES = 100;
-    public static int EDAM_MAX_VALUES_PER_PREFERENCE = 250;
+    public static int EDAM_MAX_VALUES_PER_PREFERENCE = 256;
     public static string EDAM_PREFERENCE_NAME_REGEX = "^[A-Za-z0-9_.-]{3,32}$";
     public static string EDAM_PREFERENCE_VALUE_REGEX = "^[^\\p{Cc}]{1,1024}$";
+    public static string EDAM_PREFERENCE_SHORTCUTS = "evernote.shortcuts";
+    public static int EDAM_PREFERENCE_SHORTCUTS_MAX_VALUES = 250;
     public static int EDAM_DEVICE_ID_LEN_MAX = 32;
     public static string EDAM_DEVICE_ID_REGEX = "^[^\\p{Cc}]{1,32}$";
     public static int EDAM_DEVICE_DESCRIPTION_LEN_MAX = 64;
     public static string EDAM_DEVICE_DESCRIPTION_REGEX = "^[^\\p{Cc}]{1,64}$";
+    public static int EDAM_SEARCH_SUGGESTIONS_MAX = 10;
+    public static int EDAM_SEARCH_SUGGESTIONS_PREFIX_LEN_MAX = 1024;
+    public static int EDAM_SEARCH_SUGGESTIONS_PREFIX_LEN_MIN = 2;
     static Constants()
     {
       EDAM_MIME_TYPES.Add("image/gif");
@@ -157,6 +168,21 @@ namespace Evernote.EDAM.Limits
       EDAM_MIME_TYPES.Add("video/mp4");
       EDAM_MIME_TYPES.Add("audio/aac");
       EDAM_MIME_TYPES.Add("audio/mp4");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/msword");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/mspowerpoint");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/excel");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/vnd.ms-word");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/vnd.ms-powerpoint");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/vnd.ms-excel");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/vnd.openxmlformats-officedocument.presentationml.presentation");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/vnd.apple.pages");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/vnd.apple.numbers");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/vnd.apple.keynote");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/x-iwork-pages-sffpages");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/x-iwork-numbers-sffnumbers");
+      EDAM_INDEXABLE_RESOURCE_MIME_TYPES.Add("application/x-iwork-keynote-sffkey");
       EDAM_PUBLISHING_URI_PROHIBITED.Add("..");
     }
   }

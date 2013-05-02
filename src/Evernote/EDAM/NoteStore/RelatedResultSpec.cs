@@ -25,7 +25,6 @@ namespace Evernote.EDAM.NoteStore
     private int _maxTags;
     private bool _writableNotebooksOnly;
     private bool _includeContainingNotebooks;
-    private bool _includeDebugInfo;
 
     public int MaxNotes
     {
@@ -92,19 +91,6 @@ namespace Evernote.EDAM.NoteStore
       }
     }
 
-    public bool IncludeDebugInfo
-    {
-      get
-      {
-        return _includeDebugInfo;
-      }
-      set
-      {
-        __isset.includeDebugInfo = true;
-        this._includeDebugInfo = value;
-      }
-    }
-
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -116,7 +102,6 @@ namespace Evernote.EDAM.NoteStore
       public bool maxTags;
       public bool writableNotebooksOnly;
       public bool includeContainingNotebooks;
-      public bool includeDebugInfo;
     }
 
     public RelatedResultSpec() {
@@ -165,13 +150,6 @@ namespace Evernote.EDAM.NoteStore
           case 5:
             if (field.Type == TType.Bool) {
               IncludeContainingNotebooks = iprot.ReadBool();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 6:
-            if (field.Type == TType.Bool) {
-              IncludeDebugInfo = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -229,14 +207,6 @@ namespace Evernote.EDAM.NoteStore
         oprot.WriteBool(IncludeContainingNotebooks);
         oprot.WriteFieldEnd();
       }
-      if (__isset.includeDebugInfo) {
-        field.Name = "includeDebugInfo";
-        field.Type = TType.Bool;
-        field.ID = 6;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteBool(IncludeDebugInfo);
-        oprot.WriteFieldEnd();
-      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -253,8 +223,6 @@ namespace Evernote.EDAM.NoteStore
       sb.Append(WritableNotebooksOnly);
       sb.Append(",IncludeContainingNotebooks: ");
       sb.Append(IncludeContainingNotebooks);
-      sb.Append(",IncludeDebugInfo: ");
-      sb.Append(IncludeDebugInfo);
       sb.Append(")");
       return sb.ToString();
     }

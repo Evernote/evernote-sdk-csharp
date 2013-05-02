@@ -44,12 +44,13 @@ namespace Evernote.EDAM.Type
     private string _twitterId;
     private string _groupName;
     private string _recognitionLanguage;
-    private long _customerProfileId;
     private string _referralProof;
     private bool _educationalDiscount;
     private string _businessAddress;
     private bool _hideSponsorBilling;
     private bool _taxExempt;
+    private bool _useEmailAutoFiling;
+    private ReminderEmailConfig _reminderEmailConfig;
 
     public string DefaultLocationName
     {
@@ -363,19 +364,6 @@ namespace Evernote.EDAM.Type
       }
     }
 
-    public long CustomerProfileId
-    {
-      get
-      {
-        return _customerProfileId;
-      }
-      set
-      {
-        __isset.customerProfileId = true;
-        this._customerProfileId = value;
-      }
-    }
-
     public string ReferralProof
     {
       get
@@ -441,6 +429,32 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public bool UseEmailAutoFiling
+    {
+      get
+      {
+        return _useEmailAutoFiling;
+      }
+      set
+      {
+        __isset.useEmailAutoFiling = true;
+        this._useEmailAutoFiling = value;
+      }
+    }
+
+    public ReminderEmailConfig ReminderEmailConfig
+    {
+      get
+      {
+        return _reminderEmailConfig;
+      }
+      set
+      {
+        __isset.reminderEmailConfig = true;
+        this._reminderEmailConfig = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -471,12 +485,13 @@ namespace Evernote.EDAM.Type
       public bool twitterId;
       public bool groupName;
       public bool recognitionLanguage;
-      public bool customerProfileId;
       public bool referralProof;
       public bool educationalDiscount;
       public bool businessAddress;
       public bool hideSponsorBilling;
       public bool taxExempt;
+      public bool useEmailAutoFiling;
+      public bool reminderEmailConfig;
     }
 
     public UserAttributes() {
@@ -682,13 +697,6 @@ namespace Evernote.EDAM.Type
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 27:
-            if (field.Type == TType.I64) {
-              CustomerProfileId = iprot.ReadI64();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
           case 28:
             if (field.Type == TType.String) {
               ReferralProof = iprot.ReadString();
@@ -720,6 +728,20 @@ namespace Evernote.EDAM.Type
           case 32:
             if (field.Type == TType.Bool) {
               TaxExempt = iprot.ReadBool();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 33:
+            if (field.Type == TType.Bool) {
+              UseEmailAutoFiling = iprot.ReadBool();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 34:
+            if (field.Type == TType.I32) {
+              ReminderEmailConfig = (ReminderEmailConfig)iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -943,14 +965,6 @@ namespace Evernote.EDAM.Type
         oprot.WriteString(RecognitionLanguage);
         oprot.WriteFieldEnd();
       }
-      if (__isset.customerProfileId) {
-        field.Name = "customerProfileId";
-        field.Type = TType.I64;
-        field.ID = 27;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI64(CustomerProfileId);
-        oprot.WriteFieldEnd();
-      }
       if (ReferralProof != null && __isset.referralProof) {
         field.Name = "referralProof";
         field.Type = TType.String;
@@ -989,6 +1003,22 @@ namespace Evernote.EDAM.Type
         field.ID = 32;
         oprot.WriteFieldBegin(field);
         oprot.WriteBool(TaxExempt);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.useEmailAutoFiling) {
+        field.Name = "useEmailAutoFiling";
+        field.Type = TType.Bool;
+        field.ID = 33;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteBool(UseEmailAutoFiling);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.reminderEmailConfig) {
+        field.Name = "reminderEmailConfig";
+        field.Type = TType.I32;
+        field.ID = 34;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32((int)ReminderEmailConfig);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -1045,8 +1075,6 @@ namespace Evernote.EDAM.Type
       sb.Append(GroupName);
       sb.Append(",RecognitionLanguage: ");
       sb.Append(RecognitionLanguage);
-      sb.Append(",CustomerProfileId: ");
-      sb.Append(CustomerProfileId);
       sb.Append(",ReferralProof: ");
       sb.Append(ReferralProof);
       sb.Append(",EducationalDiscount: ");
@@ -1057,6 +1085,10 @@ namespace Evernote.EDAM.Type
       sb.Append(HideSponsorBilling);
       sb.Append(",TaxExempt: ");
       sb.Append(TaxExempt);
+      sb.Append(",UseEmailAutoFiling: ");
+      sb.Append(UseEmailAutoFiling);
+      sb.Append(",ReminderEmailConfig: ");
+      sb.Append(ReminderEmailConfig);
       sb.Append(")");
       return sb.ToString();
     }

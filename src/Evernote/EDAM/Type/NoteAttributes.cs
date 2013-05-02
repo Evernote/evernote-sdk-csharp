@@ -29,6 +29,9 @@ namespace Evernote.EDAM.Type
     private string _sourceURL;
     private string _sourceApplication;
     private long _shareDate;
+    private long _reminderOrder;
+    private long _reminderDoneTime;
+    private long _reminderTime;
     private string _placeName;
     private string _contentClass;
     private LazyMap _applicationData;
@@ -152,6 +155,45 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public long ReminderOrder
+    {
+      get
+      {
+        return _reminderOrder;
+      }
+      set
+      {
+        __isset.reminderOrder = true;
+        this._reminderOrder = value;
+      }
+    }
+
+    public long ReminderDoneTime
+    {
+      get
+      {
+        return _reminderDoneTime;
+      }
+      set
+      {
+        __isset.reminderDoneTime = true;
+        this._reminderDoneTime = value;
+      }
+    }
+
+    public long ReminderTime
+    {
+      get
+      {
+        return _reminderTime;
+      }
+      set
+      {
+        __isset.reminderTime = true;
+        this._reminderTime = value;
+      }
+    }
+
     public string PlaceName
     {
       get
@@ -232,6 +274,9 @@ namespace Evernote.EDAM.Type
       public bool sourceURL;
       public bool sourceApplication;
       public bool shareDate;
+      public bool reminderOrder;
+      public bool reminderDoneTime;
+      public bool reminderTime;
       public bool placeName;
       public bool contentClass;
       public bool applicationData;
@@ -313,6 +358,27 @@ namespace Evernote.EDAM.Type
           case 17:
             if (field.Type == TType.I64) {
               ShareDate = iprot.ReadI64();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 18:
+            if (field.Type == TType.I64) {
+              ReminderOrder = iprot.ReadI64();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 19:
+            if (field.Type == TType.I64) {
+              ReminderDoneTime = iprot.ReadI64();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 20:
+            if (field.Type == TType.I64) {
+              ReminderTime = iprot.ReadI64();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -450,6 +516,30 @@ namespace Evernote.EDAM.Type
         oprot.WriteI64(ShareDate);
         oprot.WriteFieldEnd();
       }
+      if (__isset.reminderOrder) {
+        field.Name = "reminderOrder";
+        field.Type = TType.I64;
+        field.ID = 18;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI64(ReminderOrder);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.reminderDoneTime) {
+        field.Name = "reminderDoneTime";
+        field.Type = TType.I64;
+        field.ID = 19;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI64(ReminderDoneTime);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.reminderTime) {
+        field.Name = "reminderTime";
+        field.Type = TType.I64;
+        field.ID = 20;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI64(ReminderTime);
+        oprot.WriteFieldEnd();
+      }
       if (PlaceName != null && __isset.placeName) {
         field.Name = "placeName";
         field.Type = TType.String;
@@ -522,6 +612,12 @@ namespace Evernote.EDAM.Type
       sb.Append(SourceApplication);
       sb.Append(",ShareDate: ");
       sb.Append(ShareDate);
+      sb.Append(",ReminderOrder: ");
+      sb.Append(ReminderOrder);
+      sb.Append(",ReminderDoneTime: ");
+      sb.Append(ReminderDoneTime);
+      sb.Append(",ReminderTime: ");
+      sb.Append(ReminderTime);
       sb.Append(",PlaceName: ");
       sb.Append(PlaceName);
       sb.Append(",ContentClass: ");

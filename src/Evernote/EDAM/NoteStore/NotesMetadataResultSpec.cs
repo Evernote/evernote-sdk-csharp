@@ -24,6 +24,7 @@ namespace Evernote.EDAM.NoteStore
     private bool _includeContentLength;
     private bool _includeCreated;
     private bool _includeUpdated;
+    private bool _includeDeleted;
     private bool _includeUpdateSequenceNum;
     private bool _includeNotebookGuid;
     private bool _includeTagGuids;
@@ -80,6 +81,19 @@ namespace Evernote.EDAM.NoteStore
       {
         __isset.includeUpdated = true;
         this._includeUpdated = value;
+      }
+    }
+
+    public bool IncludeDeleted
+    {
+      get
+      {
+        return _includeDeleted;
+      }
+      set
+      {
+        __isset.includeDeleted = true;
+        this._includeDeleted = value;
       }
     }
 
@@ -171,6 +185,7 @@ namespace Evernote.EDAM.NoteStore
       public bool includeContentLength;
       public bool includeCreated;
       public bool includeUpdated;
+      public bool includeDeleted;
       public bool includeUpdateSequenceNum;
       public bool includeNotebookGuid;
       public bool includeTagGuids;
@@ -218,6 +233,13 @@ namespace Evernote.EDAM.NoteStore
           case 7:
             if (field.Type == TType.Bool) {
               IncludeUpdated = iprot.ReadBool();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 8:
+            if (field.Type == TType.Bool) {
+              IncludeDeleted = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -309,6 +331,14 @@ namespace Evernote.EDAM.NoteStore
         oprot.WriteBool(IncludeUpdated);
         oprot.WriteFieldEnd();
       }
+      if (__isset.includeDeleted) {
+        field.Name = "includeDeleted";
+        field.Type = TType.Bool;
+        field.ID = 8;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteBool(IncludeDeleted);
+        oprot.WriteFieldEnd();
+      }
       if (__isset.includeUpdateSequenceNum) {
         field.Name = "includeUpdateSequenceNum";
         field.Type = TType.Bool;
@@ -371,6 +401,8 @@ namespace Evernote.EDAM.NoteStore
       sb.Append(IncludeCreated);
       sb.Append(",IncludeUpdated: ");
       sb.Append(IncludeUpdated);
+      sb.Append(",IncludeDeleted: ");
+      sb.Append(IncludeDeleted);
       sb.Append(",IncludeUpdateSequenceNum: ");
       sb.Append(IncludeUpdateSequenceNum);
       sb.Append(",IncludeNotebookGuid: ");

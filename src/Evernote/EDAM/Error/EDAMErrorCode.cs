@@ -25,5 +25,7 @@ namespace Evernote.EDAM.Error
     TOO_FEW = 15,
     TOO_MANY = 16,
     UNSUPPORTED_OPERATION = 17,
+    TAKEN_DOWN = 18,
+    RATE_LIMIT_REACHED = 19,
   }
 }
