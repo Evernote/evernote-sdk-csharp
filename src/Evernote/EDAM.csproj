@@ -56,7 +56,6 @@
     <Compile Include="EDAM\NoteStore\RelatedQuery.cs" />
     <Compile Include="EDAM\NoteStore\RelatedResult.cs" />
     <Compile Include="EDAM\NoteStore\RelatedResultSpec.cs" />
-    <Compile Include="EDAM\NoteStore\Preferences.cs" />
     <Compile Include="EDAM\NoteStore\SyncChunk.cs" />
     <Compile Include="EDAM\NoteStore\SyncChunkFilter.cs" />
     <Compile Include="EDAM\NoteStore\SyncState.cs" />
@@ -90,6 +89,7 @@
     <Compile Include="EDAM\Type\Tag.cs" />
     <Compile Include="EDAM\Type\User.cs" />
     <Compile Include="EDAM\Type\UserAttributes.cs" />
+    <Compile Include="EDAM\Type\ReminderEmailConfig.cs" />
     <Compile Include="EDAM\UserStore\AuthenticationResult.cs" />
     <Compile Include="EDAM\UserStore\BootstrapInfo.cs" />
     <Compile Include="EDAM\UserStore\BootstrapProfile.cs" />
