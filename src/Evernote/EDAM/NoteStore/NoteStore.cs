@@ -316,6 +316,11 @@ namespace Evernote.EDAM.NoteStore
       IAsyncResult Begin_updateSharedNotebook(AsyncCallback callback, object state, string authenticationToken, Evernote.EDAM.Type.SharedNotebook sharedNotebook);
       int End_updateSharedNotebook(IAsyncResult asyncResult);
       #endif
+      int setSharedNotebookRecipientSettings(string authenticationToken, long sharedNotebookId, Evernote.EDAM.Type.SharedNotebookRecipientSettings recipientSettings);
+      #if SILVERLIGHT || NETFX_CORE
+      IAsyncResult Begin_setSharedNotebookRecipientSettings(AsyncCallback callback, object state, string authenticationToken, long sharedNotebookId, Evernote.EDAM.Type.SharedNotebookRecipientSettings recipientSettings);
+      int End_setSharedNotebookRecipientSettings(IAsyncResult asyncResult);
+      #endif
       int sendMessageToSharedNotebookMembers(string authenticationToken, string notebookGuid, string messageText, List<string> recipients);
       #if SILVERLIGHT || NETFX_CORE
       IAsyncResult Begin_sendMessageToSharedNotebookMembers(AsyncCallback callback, object state, string authenticationToken, string notebookGuid, string messageText, List<string> recipients);
@@ -376,9 +381,9 @@ namespace Evernote.EDAM.NoteStore
       IAsyncResult Begin_stopSharingNote(AsyncCallback callback, object state, string authenticationToken, string guid);
       void End_stopSharingNote(IAsyncResult asyncResult);
       #endif
-      Evernote.EDAM.UserStore.AuthenticationResult authenticateToSharedNote(string guid, string noteKey);
+      Evernote.EDAM.UserStore.AuthenticationResult authenticateToSharedNote(string guid, string noteKey, string authenticationToken);
       #if SILVERLIGHT || NETFX_CORE
-      IAsyncResult Begin_authenticateToSharedNote(AsyncCallback callback, object state, string guid, string noteKey);
+      IAsyncResult Begin_authenticateToSharedNote(AsyncCallback callback, object state, string guid, string noteKey, string authenticationToken);
       Evernote.EDAM.UserStore.AuthenticationResult End_authenticateToSharedNote(IAsyncResult asyncResult);
       #endif
       RelatedResult findRelated(string authenticationToken, RelatedQuery query, RelatedResultSpec resultSpec);
@@ -4610,6 +4615,77 @@ namespace Evernote.EDAM.NoteStore
       }
 
       #if SILVERLIGHT || NETFX_CORE
+      public IAsyncResult Begin_setSharedNotebookRecipientSettings(AsyncCallback callback, object state, string authenticationToken, long sharedNotebookId, Evernote.EDAM.Type.SharedNotebookRecipientSettings recipientSettings)
+      {
+        return send_setSharedNotebookRecipientSettings(callback, state, authenticationToken, sharedNotebookId, recipientSettings);
+      }
+
+      public int End_setSharedNotebookRecipientSettings(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_setSharedNotebookRecipientSettings();
+      }
+
+      #endif
+      public int setSharedNotebookRecipientSettings(string authenticationToken, long sharedNotebookId, Evernote.EDAM.Type.SharedNotebookRecipientSettings recipientSettings)
+      {
+        #if !SILVERLIGHT && !NETFX_CORE
+        send_setSharedNotebookRecipientSettings(authenticationToken, sharedNotebookId, recipientSettings);
+        return recv_setSharedNotebookRecipientSettings();
+
+        #else
+        var asyncResult = Begin_setSharedNotebookRecipientSettings(null, null, authenticationToken, sharedNotebookId, recipientSettings);
+        return End_setSharedNotebookRecipientSettings(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT || NETFX_CORE
+      public IAsyncResult send_setSharedNotebookRecipientSettings(AsyncCallback callback, object state, string authenticationToken, long sharedNotebookId, Evernote.EDAM.Type.SharedNotebookRecipientSettings recipientSettings)
+      #else
+      public void send_setSharedNotebookRecipientSettings(string authenticationToken, long sharedNotebookId, Evernote.EDAM.Type.SharedNotebookRecipientSettings recipientSettings)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("setSharedNotebookRecipientSettings", TMessageType.Call, seqid_));
+        setSharedNotebookRecipientSettings_args args = new setSharedNotebookRecipientSettings_args();
+        args.AuthenticationToken = authenticationToken;
+        args.SharedNotebookId = sharedNotebookId;
+        args.RecipientSettings = recipientSettings;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT || NETFX_CORE
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public int recv_setSharedNotebookRecipientSettings()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        setSharedNotebookRecipientSettings_result result = new setSharedNotebookRecipientSettings_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        if (result.__isset.userException) {
+          throw result.UserException;
+        }
+        if (result.__isset.notFoundException) {
+          throw result.NotFoundException;
+        }
+        if (result.__isset.systemException) {
+          throw result.SystemException;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "setSharedNotebookRecipientSettings failed: unknown result");
+      }
+
+      #if SILVERLIGHT || NETFX_CORE
       public IAsyncResult Begin_sendMessageToSharedNotebookMembers(AsyncCallback callback, object state, string authenticationToken, string notebookGuid, string messageText, List<string> recipients)
       {
         return send_sendMessageToSharedNotebookMembers(callback, state, authenticationToken, notebookGuid, messageText, recipients);
@@ -5443,9 +5519,9 @@ namespace Evernote.EDAM.NoteStore
       }
 
       #if SILVERLIGHT || NETFX_CORE
-      public IAsyncResult Begin_authenticateToSharedNote(AsyncCallback callback, object state, string guid, string noteKey)
+      public IAsyncResult Begin_authenticateToSharedNote(AsyncCallback callback, object state, string guid, string noteKey, string authenticationToken)
       {
-        return send_authenticateToSharedNote(callback, state, guid, noteKey);
+        return send_authenticateToSharedNote(callback, state, guid, noteKey, authenticationToken);
       }
 
       public Evernote.EDAM.UserStore.AuthenticationResult End_authenticateToSharedNote(IAsyncResult asyncResult)
@@ -5455,28 +5531,29 @@ namespace Evernote.EDAM.NoteStore
       }
 
       #endif
-      public Evernote.EDAM.UserStore.AuthenticationResult authenticateToSharedNote(string guid, string noteKey)
+      public Evernote.EDAM.UserStore.AuthenticationResult authenticateToSharedNote(string guid, string noteKey, string authenticationToken)
       {
         #if !SILVERLIGHT && !NETFX_CORE
-        send_authenticateToSharedNote(guid, noteKey);
+        send_authenticateToSharedNote(guid, noteKey, authenticationToken);
         return recv_authenticateToSharedNote();
 
         #else
-        var asyncResult = Begin_authenticateToSharedNote(null, null, guid, noteKey);
+        var asyncResult = Begin_authenticateToSharedNote(null, null, guid, noteKey, authenticationToken);
         return End_authenticateToSharedNote(asyncResult);
 
         #endif
       }
       #if SILVERLIGHT || NETFX_CORE
-      public IAsyncResult send_authenticateToSharedNote(AsyncCallback callback, object state, string guid, string noteKey)
+      public IAsyncResult send_authenticateToSharedNote(AsyncCallback callback, object state, string guid, string noteKey, string authenticationToken)
       #else
-      public void send_authenticateToSharedNote(string guid, string noteKey)
+      public void send_authenticateToSharedNote(string guid, string noteKey, string authenticationToken)
       #endif
       {
         oprot_.WriteMessageBegin(new TMessage("authenticateToSharedNote", TMessageType.Call, seqid_));
         authenticateToSharedNote_args args = new authenticateToSharedNote_args();
         args.Guid = guid;
         args.NoteKey = noteKey;
+        args.AuthenticationToken = authenticationToken;
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
         #if SILVERLIGHT || NETFX_CORE
@@ -5648,6 +5725,7 @@ namespace Evernote.EDAM.NoteStore
         processMap_["getPublicNotebook"] = getPublicNotebook_Process;
         processMap_["createSharedNotebook"] = createSharedNotebook_Process;
         processMap_["updateSharedNotebook"] = updateSharedNotebook_Process;
+        processMap_["setSharedNotebookRecipientSettings"] = setSharedNotebookRecipientSettings_Process;
         processMap_["sendMessageToSharedNotebookMembers"] = sendMessageToSharedNotebookMembers_Process;
         processMap_["listSharedNotebooks"] = listSharedNotebooks_Process;
         processMap_["expungeSharedNotebooks"] = expungeSharedNotebooks_Process;
@@ -6930,6 +7008,27 @@ namespace Evernote.EDAM.NoteStore
         oprot.Transport.Flush();
       }
 
+      public void setSharedNotebookRecipientSettings_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        setSharedNotebookRecipientSettings_args args = new setSharedNotebookRecipientSettings_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        setSharedNotebookRecipientSettings_result result = new setSharedNotebookRecipientSettings_result();
+        try {
+          result.Success = iface_.setSharedNotebookRecipientSettings(args.AuthenticationToken, args.SharedNotebookId, args.RecipientSettings);
+        } catch (Evernote.EDAM.Error.EDAMUserException userException) {
+          result.UserException = userException;
+        } catch (Evernote.EDAM.Error.EDAMNotFoundException notFoundException) {
+          result.NotFoundException = notFoundException;
+        } catch (Evernote.EDAM.Error.EDAMSystemException systemException) {
+          result.SystemException = systemException;
+        }
+        oprot.WriteMessageBegin(new TMessage("setSharedNotebookRecipientSettings", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public void sendMessageToSharedNotebookMembers_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         sendMessageToSharedNotebookMembers_args args = new sendMessageToSharedNotebookMembers_args();
@@ -7189,7 +7288,7 @@ namespace Evernote.EDAM.NoteStore
         iprot.ReadMessageEnd();
         authenticateToSharedNote_result result = new authenticateToSharedNote_result();
         try {
-          result.Success = iface_.authenticateToSharedNote(args.Guid, args.NoteKey);
+          result.Success = iface_.authenticateToSharedNote(args.Guid, args.NoteKey, args.AuthenticationToken);
         } catch (Evernote.EDAM.Error.EDAMUserException userException) {
           result.UserException = userException;
         } catch (Evernote.EDAM.Error.EDAMNotFoundException notFoundException) {
@@ -26707,6 +26806,348 @@ namespace Evernote.EDAM.NoteStore
     #if !SILVERLIGHT && !NETFX_CORE
     [Serializable]
     #endif
+    public partial class setSharedNotebookRecipientSettings_args : TBase
+    {
+      private string _authenticationToken;
+      private long _sharedNotebookId;
+      private Evernote.EDAM.Type.SharedNotebookRecipientSettings _recipientSettings;
+
+      public string AuthenticationToken
+      {
+        get
+        {
+          return _authenticationToken;
+        }
+        set
+        {
+          __isset.authenticationToken = true;
+          this._authenticationToken = value;
+        }
+      }
+
+      public long SharedNotebookId
+      {
+        get
+        {
+          return _sharedNotebookId;
+        }
+        set
+        {
+          __isset.sharedNotebookId = true;
+          this._sharedNotebookId = value;
+        }
+      }
+
+      public Evernote.EDAM.Type.SharedNotebookRecipientSettings RecipientSettings
+      {
+        get
+        {
+          return _recipientSettings;
+        }
+        set
+        {
+          __isset.recipientSettings = true;
+          this._recipientSettings = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT && !NETFX_CORE
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool authenticationToken;
+        public bool sharedNotebookId;
+        public bool recipientSettings;
+      }
+
+      public setSharedNotebookRecipientSettings_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                AuthenticationToken = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I64) {
+                SharedNotebookId = iprot.ReadI64();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Struct) {
+                RecipientSettings = new Evernote.EDAM.Type.SharedNotebookRecipientSettings();
+                RecipientSettings.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("setSharedNotebookRecipientSettings_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (AuthenticationToken != null && __isset.authenticationToken) {
+          field.Name = "authenticationToken";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(AuthenticationToken);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.sharedNotebookId) {
+          field.Name = "sharedNotebookId";
+          field.Type = TType.I64;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI64(SharedNotebookId);
+          oprot.WriteFieldEnd();
+        }
+        if (RecipientSettings != null && __isset.recipientSettings) {
+          field.Name = "recipientSettings";
+          field.Type = TType.Struct;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          RecipientSettings.Write(oprot);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("setSharedNotebookRecipientSettings_args(");
+        sb.Append("AuthenticationToken: ");
+        sb.Append(AuthenticationToken);
+        sb.Append(",SharedNotebookId: ");
+        sb.Append(SharedNotebookId);
+        sb.Append(",RecipientSettings: ");
+        sb.Append(RecipientSettings== null ? "<null>" : RecipientSettings.ToString());
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT && !NETFX_CORE
+    [Serializable]
+    #endif
+    public partial class setSharedNotebookRecipientSettings_result : TBase
+    {
+      private int _success;
+      private Evernote.EDAM.Error.EDAMUserException _userException;
+      private Evernote.EDAM.Error.EDAMNotFoundException _notFoundException;
+      private Evernote.EDAM.Error.EDAMSystemException _systemException;
+
+      public int Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Evernote.EDAM.Error.EDAMUserException UserException
+      {
+        get
+        {
+          return _userException;
+        }
+        set
+        {
+          __isset.userException = true;
+          this._userException = value;
+        }
+      }
+
+      public Evernote.EDAM.Error.EDAMNotFoundException NotFoundException
+      {
+        get
+        {
+          return _notFoundException;
+        }
+        set
+        {
+          __isset.notFoundException = true;
+          this._notFoundException = value;
+        }
+      }
+
+      public Evernote.EDAM.Error.EDAMSystemException SystemException
+      {
+        get
+        {
+          return _systemException;
+        }
+        set
+        {
+          __isset.systemException = true;
+          this._systemException = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT && !NETFX_CORE
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+        public bool userException;
+        public bool notFoundException;
+        public bool systemException;
+      }
+
+      public setSharedNotebookRecipientSettings_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.I32) {
+                Success = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                UserException = new Evernote.EDAM.Error.EDAMUserException();
+                UserException.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.Struct) {
+                NotFoundException = new Evernote.EDAM.Error.EDAMNotFoundException();
+                NotFoundException.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Struct) {
+                SystemException = new Evernote.EDAM.Error.EDAMSystemException();
+                SystemException.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("setSharedNotebookRecipientSettings_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.I32;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Success);
+          oprot.WriteFieldEnd();
+        } else if (this.__isset.userException) {
+          if (UserException != null) {
+            field.Name = "UserException";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            UserException.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        } else if (this.__isset.notFoundException) {
+          if (NotFoundException != null) {
+            field.Name = "NotFoundException";
+            field.Type = TType.Struct;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            NotFoundException.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        } else if (this.__isset.systemException) {
+          if (SystemException != null) {
+            field.Name = "SystemException";
+            field.Type = TType.Struct;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            SystemException.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("setSharedNotebookRecipientSettings_result(");
+        sb.Append("Success: ");
+        sb.Append(Success);
+        sb.Append(",UserException: ");
+        sb.Append(UserException== null ? "<null>" : UserException.ToString());
+        sb.Append(",NotFoundException: ");
+        sb.Append(NotFoundException== null ? "<null>" : NotFoundException.ToString());
+        sb.Append(",SystemException: ");
+        sb.Append(SystemException== null ? "<null>" : SystemException.ToString());
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT && !NETFX_CORE
+    [Serializable]
+    #endif
     public partial class sendMessageToSharedNotebookMembers_args : TBase
     {
       private string _authenticationToken;
@@ -30413,6 +30854,7 @@ namespace Evernote.EDAM.NoteStore
     {
       private string _guid;
       private string _noteKey;
+      private string _authenticationToken;
 
       public string Guid
       {
@@ -30440,6 +30882,19 @@ namespace Evernote.EDAM.NoteStore
         }
       }
 
+      public string AuthenticationToken
+      {
+        get
+        {
+          return _authenticationToken;
+        }
+        set
+        {
+          __isset.authenticationToken = true;
+          this._authenticationToken = value;
+        }
+      }
+
 
       public Isset __isset;
       #if !SILVERLIGHT && !NETFX_CORE
@@ -30448,6 +30903,7 @@ namespace Evernote.EDAM.NoteStore
       public struct Isset {
         public bool guid;
         public bool noteKey;
+        public bool authenticationToken;
       }
 
       public authenticateToSharedNote_args() {
@@ -30475,6 +30931,13 @@ namespace Evernote.EDAM.NoteStore
             case 2:
               if (field.Type == TType.String) {
                 NoteKey = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.String) {
+                AuthenticationToken = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -30508,6 +30971,14 @@ namespace Evernote.EDAM.NoteStore
           oprot.WriteString(NoteKey);
           oprot.WriteFieldEnd();
         }
+        if (AuthenticationToken != null && __isset.authenticationToken) {
+          field.Name = "authenticationToken";
+          field.Type = TType.String;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(AuthenticationToken);
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -30518,6 +30989,8 @@ namespace Evernote.EDAM.NoteStore
         sb.Append(Guid);
         sb.Append(",NoteKey: ");
         sb.Append(NoteKey);
+        sb.Append(",AuthenticationToken: ");
+        sb.Append(AuthenticationToken);
         sb.Append(")");
         return sb.ToString();
       }

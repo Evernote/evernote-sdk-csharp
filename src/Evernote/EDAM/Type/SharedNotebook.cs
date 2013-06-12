@@ -32,6 +32,7 @@ namespace Evernote.EDAM.Type
     private string _username;
     private SharedNotebookPrivilegeLevel _privilege;
     private bool _allowPreview;
+    private SharedNotebookRecipientSettings _recipientSettings;
 
     public long Id
     {
@@ -189,6 +190,19 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public SharedNotebookRecipientSettings RecipientSettings
+    {
+      get
+      {
+        return _recipientSettings;
+      }
+      set
+      {
+        __isset.recipientSettings = true;
+        this._recipientSettings = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -207,6 +221,7 @@ namespace Evernote.EDAM.Type
       public bool username;
       public bool privilege;
       public bool allowPreview;
+      public bool recipientSettings;
     }
 
     public SharedNotebook() {
@@ -304,6 +319,14 @@ namespace Evernote.EDAM.Type
           case 12:
             if (field.Type == TType.Bool) {
               AllowPreview = iprot.ReadBool();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 13:
+            if (field.Type == TType.Struct) {
+              RecipientSettings = new SharedNotebookRecipientSettings();
+              RecipientSettings.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -417,6 +440,14 @@ namespace Evernote.EDAM.Type
         oprot.WriteBool(AllowPreview);
         oprot.WriteFieldEnd();
       }
+      if (RecipientSettings != null && __isset.recipientSettings) {
+        field.Name = "recipientSettings";
+        field.Type = TType.Struct;
+        field.ID = 13;
+        oprot.WriteFieldBegin(field);
+        RecipientSettings.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -447,6 +478,8 @@ namespace Evernote.EDAM.Type
       sb.Append(Privilege);
       sb.Append(",AllowPreview: ");
       sb.Append(AllowPreview);
+      sb.Append(",RecipientSettings: ");
+      sb.Append(RecipientSettings== null ? "<null>" : RecipientSettings.ToString());
       sb.Append(")");
       return sb.ToString();
     }
