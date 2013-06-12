@@ -27,6 +27,8 @@ namespace Evernote.EDAM.UserStore
     private PublicUserInfo _publicUserInfo;
     private string _noteStoreUrl;
     private string _webApiUrlPrefix;
+    private bool _secondFactorRequired;
+    private string _secondFactorDeliveryHint;
 
     public long CurrentTime
     {
@@ -119,6 +121,32 @@ namespace Evernote.EDAM.UserStore
       }
     }
 
+    public bool SecondFactorRequired
+    {
+      get
+      {
+        return _secondFactorRequired;
+      }
+      set
+      {
+        __isset.secondFactorRequired = true;
+        this._secondFactorRequired = value;
+      }
+    }
+
+    public string SecondFactorDeliveryHint
+    {
+      get
+      {
+        return _secondFactorDeliveryHint;
+      }
+      set
+      {
+        __isset.secondFactorDeliveryHint = true;
+        this._secondFactorDeliveryHint = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -132,6 +160,8 @@ namespace Evernote.EDAM.UserStore
       public bool publicUserInfo;
       public bool noteStoreUrl;
       public bool webApiUrlPrefix;
+      public bool secondFactorRequired;
+      public bool secondFactorDeliveryHint;
     }
 
     public AuthenticationResult() {
@@ -196,6 +226,20 @@ namespace Evernote.EDAM.UserStore
           case 7:
             if (field.Type == TType.String) {
               WebApiUrlPrefix = iprot.ReadString();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 8:
+            if (field.Type == TType.Bool) {
+              SecondFactorRequired = iprot.ReadBool();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 9:
+            if (field.Type == TType.String) {
+              SecondFactorDeliveryHint = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -269,6 +313,22 @@ namespace Evernote.EDAM.UserStore
         oprot.WriteString(WebApiUrlPrefix);
         oprot.WriteFieldEnd();
       }
+      if (__isset.secondFactorRequired) {
+        field.Name = "secondFactorRequired";
+        field.Type = TType.Bool;
+        field.ID = 8;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteBool(SecondFactorRequired);
+        oprot.WriteFieldEnd();
+      }
+      if (SecondFactorDeliveryHint != null && __isset.secondFactorDeliveryHint) {
+        field.Name = "secondFactorDeliveryHint";
+        field.Type = TType.String;
+        field.ID = 9;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(SecondFactorDeliveryHint);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -289,6 +349,10 @@ namespace Evernote.EDAM.UserStore
       sb.Append(NoteStoreUrl);
       sb.Append(",WebApiUrlPrefix: ");
       sb.Append(WebApiUrlPrefix);
+      sb.Append(",SecondFactorRequired: ");
+      sb.Append(SecondFactorRequired);
+      sb.Append(",SecondFactorDeliveryHint: ");
+      sb.Append(SecondFactorDeliveryHint);
       sb.Append(")");
       return sb.ToString();
     }

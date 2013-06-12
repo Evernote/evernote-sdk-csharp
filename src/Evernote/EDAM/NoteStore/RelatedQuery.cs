@@ -23,6 +23,7 @@ namespace Evernote.EDAM.NoteStore
     private string _noteGuid;
     private string _plainText;
     private NoteFilter _filter;
+    private string _referenceUri;
 
     public string NoteGuid
     {
@@ -63,6 +64,19 @@ namespace Evernote.EDAM.NoteStore
       }
     }
 
+    public string ReferenceUri
+    {
+      get
+      {
+        return _referenceUri;
+      }
+      set
+      {
+        __isset.referenceUri = true;
+        this._referenceUri = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -72,6 +86,7 @@ namespace Evernote.EDAM.NoteStore
       public bool noteGuid;
       public bool plainText;
       public bool filter;
+      public bool referenceUri;
     }
 
     public RelatedQuery() {
@@ -107,6 +122,13 @@ namespace Evernote.EDAM.NoteStore
             if (field.Type == TType.Struct) {
               Filter = new NoteFilter();
               Filter.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 4:
+            if (field.Type == TType.String) {
+              ReferenceUri = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -148,6 +170,14 @@ namespace Evernote.EDAM.NoteStore
         Filter.Write(oprot);
         oprot.WriteFieldEnd();
       }
+      if (ReferenceUri != null && __isset.referenceUri) {
+        field.Name = "referenceUri";
+        field.Type = TType.String;
+        field.ID = 4;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(ReferenceUri);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -160,6 +190,8 @@ namespace Evernote.EDAM.NoteStore
       sb.Append(PlainText);
       sb.Append(",Filter: ");
       sb.Append(Filter== null ? "<null>" : Filter.ToString());
+      sb.Append(",ReferenceUri: ");
+      sb.Append(ReferenceUri);
       sb.Append(")");
       return sb.ToString();
     }

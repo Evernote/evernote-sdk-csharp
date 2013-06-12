@@ -90,6 +90,7 @@
     <Compile Include="EDAM\Type\User.cs" />
     <Compile Include="EDAM\Type\UserAttributes.cs" />
     <Compile Include="EDAM\Type\ReminderEmailConfig.cs" />
+    <Compile Include="EDAM\Type\SharedNotebookRecipientSettings.cs" />
     <Compile Include="EDAM\UserStore\AuthenticationResult.cs" />
     <Compile Include="EDAM\UserStore\BootstrapInfo.cs" />
     <Compile Include="EDAM\UserStore\BootstrapProfile.cs" />

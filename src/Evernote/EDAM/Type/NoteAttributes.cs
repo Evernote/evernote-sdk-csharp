@@ -37,6 +37,8 @@ namespace Evernote.EDAM.Type
     private LazyMap _applicationData;
     private string _lastEditedBy;
     private Dictionary<string, string> _classifications;
+    private int _creatorId;
+    private int _lastEditorId;
 
     public long SubjectDate
     {
@@ -259,6 +261,32 @@ namespace Evernote.EDAM.Type
       }
     }
 
+    public int CreatorId
+    {
+      get
+      {
+        return _creatorId;
+      }
+      set
+      {
+        __isset.creatorId = true;
+        this._creatorId = value;
+      }
+    }
+
+    public int LastEditorId
+    {
+      get
+      {
+        return _lastEditorId;
+      }
+      set
+      {
+        __isset.lastEditorId = true;
+        this._lastEditorId = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT && !NETFX_CORE
@@ -282,6 +310,8 @@ namespace Evernote.EDAM.Type
       public bool applicationData;
       public bool lastEditedBy;
       public bool classifications;
+      public bool creatorId;
+      public bool lastEditorId;
     }
 
     public NoteAttributes() {
@@ -427,6 +457,20 @@ namespace Evernote.EDAM.Type
                 }
                 iprot.ReadMapEnd();
               }
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 27:
+            if (field.Type == TType.I32) {
+              CreatorId = iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 28:
+            if (field.Type == TType.I32) {
+              LastEditorId = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -588,6 +632,22 @@ namespace Evernote.EDAM.Type
         }
         oprot.WriteFieldEnd();
       }
+      if (__isset.creatorId) {
+        field.Name = "creatorId";
+        field.Type = TType.I32;
+        field.ID = 27;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32(CreatorId);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.lastEditorId) {
+        field.Name = "lastEditorId";
+        field.Type = TType.I32;
+        field.ID = 28;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32(LastEditorId);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -628,6 +688,10 @@ namespace Evernote.EDAM.Type
       sb.Append(LastEditedBy);
       sb.Append(",Classifications: ");
       sb.Append(Classifications);
+      sb.Append(",CreatorId: ");
+      sb.Append(CreatorId);
+      sb.Append(",LastEditorId: ");
+      sb.Append(LastEditorId);
       sb.Append(")");
       return sb.ToString();
     }
