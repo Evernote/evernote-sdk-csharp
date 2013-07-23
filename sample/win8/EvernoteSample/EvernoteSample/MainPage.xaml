@@ -1,0 +1,68 @@
+﻿<Page
+    x:Class="EvernoteSample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EvernoteSample"
+    xmlns:common="using:EvernoteSample.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <common:BooleanToVisibilityConverter x:Key="trueToVisibleConverter" />
+    </Page.Resources>
+
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="Evernote API" Margin="9,-7,0,0" Style="{StaticResource PageHeaderTextStyle}" />
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="0,12,0,0" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button Content="Start the connection process." Click="StartConnection" />
+
+                <TextBlock>
+                    <Run Text="Is my EDAM protocol version up to date?" />
+                    <Run Text="{Binding IsVersionOk}" />
+                </TextBlock>
+
+                <TextBlock>
+                    <Run Text="Notebook count is: " />
+                    <Run Text="{Binding Notebooks.Count}" />
+                </TextBlock>
+
+                <TextBlock Text="Notebooks:" />
+                <ListBox ItemsSource="{Binding Notebooks}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" />
+                                <TextBlock Text="(Default)" Visibility="{Binding DefaultNotebook, Converter={StaticResource trueToVisibleConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <TextBlock Text="Notes:" />
+                <ListBox ItemsSource="{Binding Notes}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

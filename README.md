@@ -7,7 +7,7 @@ Overview
 --------
 This SDK contains wrapper code used to call the Evernote Cloud API from C# applications.
 
-The SDK also contains two sample solutions. The solution in sample/client demonstrates the basic use of the SDK in a .NET application like you might build for the Windows desktop. The solution in sample/wp7 demonstrates the basic use of the SDK in a Windows Phone 7 Silverlight application.
+The SDK also contains three sample solutions. The solution in sample/client demonstrates the basic use of the SDK in a .NET application like you might build for the Windows desktop. The solution in sample/wp7 demonstrates the basic use of the SDK in a Windows Phone 7 Silverlight application. The solution in sample/win8 demonstrates the basic use of the SDK in a Windows 8 XAML/C# Store App.
 
 Prerequisites
 -------------
@@ -33,4 +33,13 @@ Getting Started - Windows Phone 7
 2. In the Solution Explorer, open the EvernoteSample project and then the Sample.cs file.
 3. Scroll down to the top of the EDAMTest class and fill in your Evernote developer token.
 4. Build the solution and run it in the Windows Phone Emulator.
+5. Click the "Start the connection process" button in the sample app.
+
+
+Getting Started - Windows 8
+---------------------------------
+1. Open sample\win8\EvernoteSample.sln in Visual Studio 12 or 13.
+2. In the Solution Explorer, open the EvernoteSample project and then the Sample.cs file.
+3. Scroll down to the top of the EDAMTest class and fill in your Evernote developer token.
+4. Build the solution and run it.
 5. Click the "Start the connection process" button in the sample app.
