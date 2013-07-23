@@ -1,4 +1,0 @@
-/Users/mfurniturewala/en-thrift/target/evernote-api-1.25/evernote-sdk-csharp/src/Evernote/bin/Debug/Evernote.dll.mdb
-/Users/mfurniturewala/en-thrift/target/evernote-api-1.25/evernote-sdk-csharp/src/Evernote/bin/Debug/Evernote.dll
-/Users/mfurniturewala/en-thrift/target/evernote-api-1.25/evernote-sdk-csharp/src/Evernote/obj/Debug/Evernote.dll
-/Users/mfurniturewala/en-thrift/target/evernote-api-1.25/evernote-sdk-csharp/src/Evernote/obj/Debug/Evernote.dll.mdb
