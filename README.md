@@ -17,6 +17,8 @@ In order to run the sample code, you need a user account on the sandbox service 
 
 In order to run the client client sample code, you need a developer token. Get one at https://sandbox.evernote.com/api/DeveloperToken.action
 
+For an example on how to use OAuth to authorize your C# website to access a user's notebook, see https://github.com/shaunmccarthy/AsyncOAuth.Evernote.Simple
+
 Getting Started - Windows
 -------------------------
 The project in sample\client demonstrates the basics of using the Evernote API, using developer tokens to simplify the authentication process while you're learning. 
